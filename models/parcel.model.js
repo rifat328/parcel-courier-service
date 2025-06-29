@@ -56,7 +56,7 @@ const parcelSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-parcelSchema.pre("save", function (next) {
+parcelSchema.pre("save", async function (next) {
   if (!this.trackingId) {
     this.trackingId = `PARCEL-${Date.now()}-${Math.floor(
       Math.random() * 1000
@@ -64,6 +64,10 @@ parcelSchema.pre("save", function (next) {
   }
   if (this.paymentType === "prepaid") {
     this.codAmount = 0; // Ensure COD amount is 0 for prepaid parcels.
+  }
+  if (!this.pickupAddress && this.customer) {
+    const customer = await mongose.model("User").findById(this.customer);
+    this.pickupAddress = customer.address; // Set pickup address to customer's address if not provided
   }
   next();
 });
