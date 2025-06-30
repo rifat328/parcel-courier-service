@@ -9,9 +9,9 @@ export const signUp = async (req, res, next) => {
   session.startTransaction();
 
   try {
-    const { name, email, password } = req.body;
-
-    if (!name || !email || !password) {
+    const { name, email, password, phone } = req.body;
+    console.log("signUp called with data:", req.body);
+    if (!name || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -25,18 +25,21 @@ export const signUp = async (req, res, next) => {
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = new User(
+    const newUsers = await User.create(
       [
         {
           name,
           email,
           password: hashedPassword,
+          phone: phone,
+          address: req.body.address || "",
+          role: req.body.role, // Default role is 'customer'
         },
       ],
       { session }
     );
 
-    const token = jwt.sign({ user_id: newUser[0]._id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: newUsers[0]._id }, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     });
 
@@ -48,11 +51,11 @@ export const signUp = async (req, res, next) => {
       message: "User created successfully",
       data: {
         token,
-        user: newUser[0],
+        user: newUsers[0],
       },
     });
   } catch (error) {
-    await sessionStorage.abortTransaction();
+    await session.abortTransaction();
     session.endSession();
     next(error);
   }

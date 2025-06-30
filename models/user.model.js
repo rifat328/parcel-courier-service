@@ -31,15 +31,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Phone number is required"],
       unique: true,
-      match: [/^\d{3}$/, "Please fill a valid phone number"],
+      match: [/^\d{3,11}$/, "Please fill a valid phone number"],
     },
     address: {
       type: String,
       required: [false, "Address is optional"],
       default: "",
-      trim: true,
-      minLength: 10,
+      trim: false,
       maxLength: 200,
+      validate: {
+        validator: function (v) {
+          return !v || v.length >= 10;
+        },
+        message: "Address must be at least 10 characters long",
+      },
     },
   },
   { timestamps: true }
