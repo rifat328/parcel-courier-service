@@ -66,7 +66,7 @@ parcelSchema.pre("save", async function (next) {
     this.codAmount = 0; // Ensure COD amount is 0 for prepaid parcels.
   }
   if (!this.pickupAddress && this.customer) {
-    const customer = await mongose.model("User").findById(this.customer);
+    const customer = await mongoose.model("User").findById(this.customer);
     this.pickupAddress = customer.address; // Set pickup address to customer's address if not provided
   }
   next();
