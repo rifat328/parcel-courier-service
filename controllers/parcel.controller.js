@@ -245,14 +245,19 @@ export const updateParcel = async (req, res, next) => {
 export const deleteParcel = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
+
   try {
-    const parcel = await Parcel.findByIdAndDelete(req.params.id, { session });
+    const parcel = await Parcel.findById(req.params.id).session(session);
+
     if (!parcel) {
       return res.status(404).json({
         success: false,
         message: "Parcel not found",
       });
     }
+
+    await parcel.deleteOne({ session });
+
     await session.commitTransaction();
     res.status(200).json({
       success: true,
@@ -269,17 +274,19 @@ export const deleteParcel = async (req, res, next) => {
 export const getHistoryParcels = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const isCustomer = req.user._id.toString() === id;
-    const isAgent = req.user.role === "agent";
+    const userId = req.user._id.toString();
+    const isCustomer = req.user.role === "customer" && userId === id;
+    const isAgent = req.user.role === "agent" && userId === id;
+    const isAdmin = req.user.role === "admin";
 
-    if (!isCustomer && !isAgent) {
+    if (!isCustomer && !isAgent && !isAdmin) {
       return res.status(403).json({
         success: false,
-        message: "Access Denied, you are not authorized to view this history",
+        message: "Access Denied: You're not allowed to view this history",
       });
     }
 
-    const query = isCustomer ? { customer: id } : { agent: id };
+    const query = isCustomer ? { customer: id } : isAgent ? { agent: id } : {}; // admin gets all
 
     const parcels = await Parcel.find(query)
       .populate("customer", "-password")
