@@ -9,4 +9,5 @@ export const {
   JWT_SECRET,
   ARCJET_KEY,
   SERVER,
+  CORS_ORIGIN,
 } = process.env;
