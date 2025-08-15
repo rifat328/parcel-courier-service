@@ -25,8 +25,14 @@ const SignIn = () => {
         password,
       });
 
-      const { token } = res.data.data; // or res.data.data.token depending on your backend structure
+      const { token, user } = res.data.data; // or res.data.data.token depending on your backend structure
       localStorage.setItem("token", token);
+      localStorage.setItem("userId", user._id); // Store user ID in localStorage for future api requests
+
+      console.log("Login successful:", res.data); // Log the entire response for debugging
+      console.log("Token:", token);
+      console.log("User ID:", user._id);
+      console.log("User json.stringyfy test :", JSON.stringify(user));
 
       // optional redirect
       router.push("/dashboard");
