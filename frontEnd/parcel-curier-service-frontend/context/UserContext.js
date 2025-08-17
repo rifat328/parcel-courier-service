@@ -1,13 +1,11 @@
+"use client";
 import { createContext, useContext } from "react";
 
-const UserContext = createContext();
+const userContext = createContext();
 
-export function UserProvider({ children, user }) {
-  return (
-    <UserContext.Provider value={{ user }}> {children} </UserContext.Provider>
-  );
+export function UserProvider({ user, children }) {
+  return <userContext.Provider value={user}>{children}</userContext.Provider>;
 }
-
 export function useUser() {
-  return useContext(UserContext);
+  return useContext(userContext);
 }
