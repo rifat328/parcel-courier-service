@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET, JWT_EXPIRES_IN } from "../config/env.js";
-
+import { JWT_SECRET, JWT_EXPIRES_IN, NODE_ENV } from "../config/env.js";
+import ms from "ms"; // to convert JWT_EXPIRES_IN to milliseconds to sync cookie token expiry time
 export const signUp = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -84,6 +84,19 @@ export const signIn = async (req, res, next) => {
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: ms(JWT_EXPIRES_IN), // Convert to milliseconds
+    });
+    res.cookie("userId", user._id.toString(), {
+      httpOnly: true,
+      secure: NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: ms(JWT_EXPIRES_IN), // Convert to milliseconds
     });
 
     res.status(200).json({

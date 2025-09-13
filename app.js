@@ -15,15 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// arcjet middleware for bot detection and rate limiting
-app.use(arcjetMiddleware);
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/parcels", parcelRouter);
-//CORS configuration
-
 const allowedOrigins = (CORS_ORIGIN || "http://localhost:3000").split(",");
 
+// cors middleware setup
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -36,6 +30,13 @@ app.use(
     credentials: true,
   })
 );
+
+// arcjet middleware for bot detection and rate limiting
+app.use(arcjetMiddleware);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/parcels", parcelRouter);
+//CORS configuration
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Parcel Currier Service");
