@@ -3,12 +3,15 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { cookies } from "next/headers";
+import { useAuth } from "@context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { setUser } = useAuth(); // Access setUser from AuthContext to update user state after login
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const handleSubmit = async (e) => {
@@ -20,14 +23,34 @@ const SignIn = () => {
     }
     try {
       console.log(apiBaseUrl);
-      const res = await axios.post(`${apiBaseUrl}/auth/sign-in`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${apiBaseUrl}/auth/sign-in`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      ); // Include credentials to handle cookies
+      if (res.status !== 200) {
+        throw new Error("Login failed");
+      }
+      // Update user state in context
+      const user = res.data.data.user;
+      setUser(user);
+      // redirect to dashboard based on user role
+      if (user.role === "customer") {
+        router.push("/dashboard/customer");
+      } else if (user.role === "admin") {
+        router.push("/dashboard/admin");
+      } else if (user.role === "agent") {
+        router.push("/dashboard/agent");
+      } else {
+        throw new Error("Unknown user role");
+      }
 
-      const { token, user } = res.data.data; // or res.data.data.token depending on your backend structure
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", user._id); // Store user ID in localStorage for future api requests
+      // const { token, user } = res.data.data; // or res.data.data.token depending on your backend structure
+      // localStorage.setItem("token", token);
+      // localStorage.setItem("userId", user._id); // Store user ID in localStorage for future api requests
 
       console.log("Login successful:", res.data); // Log the entire response for debugging
       console.log("Token:", token);
