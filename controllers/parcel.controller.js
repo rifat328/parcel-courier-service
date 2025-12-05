@@ -275,26 +275,69 @@ export const getHistoryParcels = async (req, res, next) => {
   try {
     const { id } = req.params;
     const userId = req.user._id.toString();
-    const isCustomer = req.user.role === "customer" && userId === id;
-    const isAgent = req.user.role === "agent" && userId === id;
-    const isAdmin = req.user.role === "admin";
+    const role = req.user.role;
 
-    if (!isCustomer && !isAgent && !isAdmin) {
-      return res.status(403).json({
-        success: false,
-        message: "Access Denied: You're not allowed to view this history",
-      });
+    let query = {};
+    let populateCustomer = false;
+    let populateAgent = false;
+
+    // CUSTOMER → can only access their own history
+    if (role === "customer") {
+      if (userId !== id) {
+        return res.status(403).json({
+          success: false,
+          message: "Customers can only view their own parcel history",
+        });
+      }
+      query = { customer: userId };
+      populateAgent = true; // only populate agent data
     }
 
-    const query = isCustomer ? { customer: id } : isAgent ? { agent: id } : {}; // admin gets all
+    // AGENT → can only access history of parcels they delivered
+    else if (role === "agent") {
+      if (userId !== id) {
+        return res.status(403).json({
+          success: false,
+          message: "Agents can only view their own delivery history",
+        });
+      }
+      query = { agent: userId };
+      populateCustomer = true; // only populate customer data
+    }
 
-    const parcels = await Parcel.find(query)
-      .populate("customer", "-password")
-      .populate("agent", "-password");
+    // ADMIN → can access any user's history
+    else if (role === "admin") {
+      // Determine if the target user is a customer or an agent
+      const targetUser = await User.findById(id).select("role");
 
-    res.status(200).json({
+      if (!targetUser) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+
+      if (targetUser.role === "customer") query = { customer: id };
+      else if (targetUser.role === "agent") query = { agent: id };
+      else
+        return res.status(400).json({
+          success: false,
+          message: "Admins do not have parcel history",
+        }); // If admin ID or some other role, dont want to expose the entire DB
+    }
+
+    let parcelQuery = Parcel.find(query).sort({ createdAt: -1 });
+    if (populateCustomer) {
+      parcelQuery = parcelQuery.populate("customer", "-password");
+    }
+    if (populateAgent) {
+      parcelQuery = parcelQuery.populate("agent", "-password");
+    }
+    const parcels = await parcelQuery;
+
+    return res.status(200).json({
       success: true,
-      message: "Parcel history fetched successfully",
+      message: "Parcel history fetched Successfully",
       data: parcels,
     });
   } catch (error) {

@@ -8,16 +8,19 @@ import errorMiddleware from "./middlewares/error.middleware.js";
 import parcelRouter from "./routes/parcel.routes.js";
 import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
 import cors from "cors";
-
+import { swaggerSpec } from "./swagger.js";
+import swaggerUi from "swagger-ui-express";
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-const allowedOrigins = (CORS_ORIGIN || "http://localhost:3000").split(",");
+// Swagger UI
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // cors middleware setup
+const allowedOrigins = (CORS_ORIGIN || "http://localhost:3000").split(",");
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -33,9 +36,11 @@ app.use(
 
 // arcjet middleware for bot detection and rate limiting
 app.use(arcjetMiddleware);
+// Use routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/parcels", parcelRouter);
+
 //CORS configuration
 
 app.get("/", (req, res) => {
