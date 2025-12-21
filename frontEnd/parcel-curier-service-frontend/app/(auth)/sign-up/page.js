@@ -9,6 +9,7 @@ const SignUp = () => {
     address: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -16,6 +17,8 @@ const SignUp = () => {
       ...prev,
       [name]: value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+
     // event.preventDefault(); // might not need it .
     // const formData = new FormData(event.currentTarget);
     // const fromElement = event.currentTarget;
@@ -26,8 +29,46 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) return;
 
-    console.log(`Final Submited Data ${formData}`);
+    console.log(`Final Submited Data ${JSON.stringify(formData, null, 2)}`);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+
+    const phoneRegex = /^\d{11}$/;
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Phone number must be exactly 11 digits";
+    }
+
+    if (!formData.role) {
+      newErrors.role = "Please select a role";
+    }
+
+    if (!formData.address.trim()) {
+      newErrors.address = "Address is required";
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
+    }
+    setErrors(newErrors);
+    //  returns true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   return (
@@ -53,6 +94,7 @@ const SignUp = () => {
             value={formData.name}
             onChange={handleChange}
           />
+          {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
           <input
             type="text"
             name="email"
@@ -61,6 +103,9 @@ const SignUp = () => {
             value={formData.email}
             onChange={handleChange}
           />
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email}</p>
+          )}
           <input
             type="text"
             name="phone"
@@ -69,6 +114,9 @@ const SignUp = () => {
             value={formData.phone}
             onChange={handleChange}
           />
+          {errors.phone && (
+            <p className="text-sm text-red-500">{errors.phone}</p>
+          )}
 
           <div className="flex items-center gap-2">
             <span className="font-medium px-2">Role</span>
@@ -129,6 +177,9 @@ const SignUp = () => {
                 </div>
               </label>
             </div>
+            {errors.role && (
+              <p className="text-sm text-red-500">{errors.role}</p>
+            )}
           </div>
 
           <textarea
@@ -139,6 +190,10 @@ const SignUp = () => {
             value={formData.address}
             onChange={handleChange}
           />
+          {errors.address && (
+            <p className="text-sm text-red-500">{errors.address}</p>
+          )}
+
           <input
             type="password"
             name="password"
@@ -147,6 +202,10 @@ const SignUp = () => {
             value={formData.password}
             onChange={handleChange}
           />
+          {errors.password && (
+            <p className="text-sm text-red-500">{errors.password}</p>
+          )}
+
           {/* submit button */}
           <button
             type="submit"
