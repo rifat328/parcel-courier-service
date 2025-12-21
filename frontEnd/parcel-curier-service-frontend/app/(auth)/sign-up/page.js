@@ -34,7 +34,7 @@ const SignUp = () => {
             placeholder="Phone"
             className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
           />
-          {/* Role Radio Buttons */}
+          {/* Role Radio Buttons 
           <div className="flex px-4 py-2 gap-2 bg-white rounded-lg ">
             <span className="pr-5 text-gray-400"> Role</span>
             <div className="flex gap-4">
@@ -43,7 +43,7 @@ const SignUp = () => {
                   type="radio"
                   name="role"
                   value="customer"
-                  className="radio radio-sm  checked:accent-cyan-300"
+                  className="radio radio-sm checked:accent-cyan-300"
                 />
                 <span>Customer</span>
               </label>
@@ -58,12 +58,70 @@ const SignUp = () => {
               </label>
             </div>
           </div>
+            */}
 
-          <input
-            type="text"
+          <div className="flex items-center gap-2">
+            <span className="font-medium px-2">Role</span>
+
+            <div className="flex gap-3">
+              {/* Customer */}
+              <label className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="customer"
+                  className="peer hidden"
+                />
+                <div
+                  className="
+                    px-4 py-2 rounded-full border
+                    border-gray-300 text-gray-600
+                    transition
+                    peer-checked:bg-[#4EC4D9]
+                    peer-checked:text-white
+                    peer-checked:border-[#4EC4D9]
+                     hover:border-[#4EC4D9]/60
+                      peer-focus-visible:ring-2
+                     peer-focus-visible:ring-[#4EC4D9]/40
+                  "
+                >
+                  Customer
+                </div>
+              </label>
+
+              {/* Agent */}
+              <label className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="agent"
+                  className="peer hidden"
+                />
+                <div
+                  className="
+                    px-4 py-2 rounded-full border
+                    border-gray-300 text-gray-600
+                    transition
+                    peer-checked:bg-[#4EC4D9]
+                    peer-checked:text-white
+                    peer-checked:border-[#4EC4D9]
+                     hover:border-[#4EC4D9]/60
+                      peer-focus-visible:ring-2
+                     peer-focus-visible:ring-[#4EC4D9]/40
+
+                  "
+                >
+                  Agent
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <textarea
             name="address"
             placeholder="Address"
-            className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
+            rows={3}
+            className="px-4 py-3 rounded-lg resize-none  focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:bg-white active:bg-white bg-white"
           />
           <input
             type="password"

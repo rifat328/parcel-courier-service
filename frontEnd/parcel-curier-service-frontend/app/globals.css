@@ -127,6 +127,13 @@ input:-webkit-autofill:active {
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #000;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
