@@ -10,7 +10,7 @@ const SignUp = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
@@ -209,9 +209,13 @@ const SignUp = () => {
           {/* submit button */}
           <button
             type="submit"
-            className="mt-4 bg-black text-white w-full py-3 rounded-lg font-semibold transition"
+            className={`mt-4 w-full py-3 rounded-lg font-semibold transition ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-black text-white"
+            }`}
           >
-            Create Account
+            {isSubmitting ? "Creating Account..." : "Create Account"}
           </button>
         </form>
       </div>
