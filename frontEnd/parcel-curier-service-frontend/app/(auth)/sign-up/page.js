@@ -15,7 +15,7 @@ const SignUp = () => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState("");
+  const [serverError, setServerError] = useState({ type: "", text: "" });
   const [showPassword, setShowPassword] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -39,7 +39,7 @@ const SignUp = () => {
     if (!isValid) return;
 
     setLoading(true);
-    setServerError("");
+    setServerError({ type: "", text: "" });
 
     try {
       const res = await fetch(
@@ -54,18 +54,35 @@ const SignUp = () => {
       );
 
       const data = await res.json();
-
+      // console.log(data.message);
       // 409 Conflict  / 400 Bad Request / 500 Internal Server Error on rest
-      if (!res.ok) {
-        // example: email already exists
-        setServerError(data.message || "Something went Wrong");
-        return;
+      if (res.status === 409) {
+        setServerError({
+          type: "error",
+          text: "User already exists! Redirecting to Sign-in...",
+        });
+        setTimeout(() => {
+          router.push("/sign-in");
+        }, 2000);
+      } else if (res.ok) {
+        setServerError({
+          type: "success",
+          text: "Account created! Redirecting...",
+        });
+        setTimeout(() => {
+          router.push("/sign-in");
+        }, 2000);
+      } else {
+        setServerMsg({
+          type: "error",
+          text: data.message || "Something went wrong. Please try again.",
+        });
       }
-
-      // success → redirect to sign-in
-      router.push("/sign-in");
     } catch (error) {
-      setServerError("Network error. Please try again.");
+      setServerError({
+        type: "error",
+        text: "Server is unreachable. Check your connection.",
+      });
     } finally {
       setLoading(false);
     }
@@ -117,7 +134,17 @@ const SignUp = () => {
           <span className="font-nico text-[#DB9118]">C</span>
           <span className="font-nico text-[#D94E4E]">S</span>
         </div>
-
+        {serverError.text && (
+          <div
+            className={`mb-4 p-3 rounded-lg text-center text-sm font-medium animate-pulse ${
+              serverError.type === "error"
+                ? "bg-red-100 text-red-500"
+                : "bg-green-100 text-green-500"
+            }`}
+          >
+            {serverError.text}
+          </div>
+        )}
         <div className="heading mb-2">
           <h1 className="text-2xl mb-1   font-nico tracking-wide">Sign-up</h1>
           <p className=" text-gray-600 mt-1">Please enter your details below</p>
@@ -224,7 +251,8 @@ const SignUp = () => {
             name="address"
             placeholder="Address"
             rows={3}
-            className="px-4 py-3 rounded-lg resize-none  focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:bg-white active:bg-white bg-white"
+            spellCheck={false}
+            className="px-4 py-3 rounded-lg resize-none text-black focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:bg-white  bg-white"
             value={formData.address}
             onChange={handleChange}
           />
@@ -237,7 +265,7 @@ const SignUp = () => {
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
-              className="px-4 py-2 rounded-lg  w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
+              className="px-4 py-2 rounded-lg   w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
               value={formData.password}
               onChange={handleChange}
             />
@@ -258,8 +286,10 @@ const SignUp = () => {
           </div>
 
           {/* submit button */}
-          {serverError && (
-            <p className="text-sm text-red-600 text-center">{serverError}</p>
+          {serverError.type === "error" && (
+            <p className="text-sm text-red-600 text-center">
+              {serverError.text}
+            </p>
           )}
           <button
             type="submit"
