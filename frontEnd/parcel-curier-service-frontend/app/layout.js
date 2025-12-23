@@ -3,7 +3,7 @@ import { Noto_Serif_Display } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer";
-
+import { AuchProvider } from "@context/AuthContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${notoSerif.variable} ${roboto.variable} ${nicoMoji.variable} antialiased`}
       >
         {/* place layout here like navbar*/}
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <Footer />
       </body>
     </html>

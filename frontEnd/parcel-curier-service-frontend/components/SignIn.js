@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { cookies } from "next/headers";
-import { useAuth } from "@context/AuthContext";
+
+import { useAuth } from "@context/AuthContext.js";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
@@ -13,7 +13,7 @@ const SignIn = () => {
   const router = useRouter();
   const { setUser } = useAuth(); // Access setUser from AuthContext to update user state after login
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+  const signInRoute = process.env.NEXT_PUBLIC_API_SIGN_IN_ROUTE;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,7 +24,7 @@ const SignIn = () => {
     try {
       console.log(apiBaseUrl);
       const res = await axios.post(
-        `${apiBaseUrl}/auth/sign-in`,
+        `${apiBaseUrl}${signInRoute}`,
         {
           email,
           password,
@@ -48,22 +48,15 @@ const SignIn = () => {
         throw new Error("Unknown user role");
       }
 
-      // const { token, user } = res.data.data; // or res.data.data.token depending on your backend structure
-      // localStorage.setItem("token", token);
-      // localStorage.setItem("userId", user._id); // Store user ID in localStorage for future api requests
-
       console.log("Login successful:", res.data); // Log the entire response for debugging
-      console.log("Token:", token);
-      console.log("User ID:", user._id);
-      console.log("User json.stringyfy test :", JSON.stringify(user));
 
-      // optional redirect
-      router.push("/dashboard");
+      console.log("User json.stringyfy test :", JSON.stringify(user));
     } catch (err) {
-      console.error(
-        "Login failed:",
-        err?.response?.data?.message || err.message
-      );
+      const message =
+        err.response?.data?.message ||
+        "Something went wrong. Please try again.";
+
+      console.error("Login failed:", message);
     }
   };
 

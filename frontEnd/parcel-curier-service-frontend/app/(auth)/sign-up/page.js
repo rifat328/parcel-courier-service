@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 const SignUp = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,7 +14,9 @@ const SignUp = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
@@ -27,10 +33,42 @@ const SignUp = () => {
     console.log(value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const isValid = validateForm();
     if (!isValid) return;
+
+    setLoading(true);
+    setServerError("");
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_SIGN_UP_ROUTE}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await res.json();
+
+      // 409 Conflict  / 400 Bad Request / 500 Internal Server Error on rest
+      if (!res.ok) {
+        // example: email already exists
+        setServerError(data.message || "Something went Wrong");
+        return;
+      }
+
+      // success → redirect to sign-in
+      router.push("/sign-in");
+    } catch (error) {
+      setServerError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
 
     console.log(`Final Submited Data ${JSON.stringify(formData, null, 2)}`);
   };
@@ -207,20 +245,21 @@ const SignUp = () => {
           )}
 
           {/* submit button */}
+          {serverError && (
+            <p className="text-sm text-red-600 text-center">{serverError}</p>
+          )}
           <button
             type="submit"
             className={`mt-4 w-full py-3 rounded-lg font-semibold transition ${
-              isSubmitting
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-black text-white"
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-black text-white"
             }`}
           >
-            {isSubmitting ? "Creating Account..." : "Create Account"}
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
       </div>
       <div className="promo hidden md:flex items-center justify-center bg-gray-100">
-        <img src="" alt="" srcset="" />
+        <img src="null" alt="" srcset="" />
       </div>
     </div>
   );
