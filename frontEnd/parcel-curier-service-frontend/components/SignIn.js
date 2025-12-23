@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 
-import { useAuth } from "@context/AuthContext.js";
+import { useAuth } from "../context/AuthContext.js";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
@@ -14,6 +14,7 @@ const SignIn = () => {
   const { setUser } = useAuth(); // Access setUser from AuthContext to update user state after login
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const signInRoute = process.env.NEXT_PUBLIC_API_SIGN_IN_ROUTE;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,7 +42,9 @@ const SignIn = () => {
       if (user.role === "customer") {
         router.push("/dashboard/customer");
       } else if (user.role === "admin") {
-        router.push("/dashboard/admin");
+        setTimeout(() => {
+          router.push("/dashboard/admin");
+        }, 1500);
       } else if (user.role === "agent") {
         router.push("/dashboard/agent");
       } else {
@@ -61,27 +64,21 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-100 to-sky-100">
-      <section className="flex flex-col justify-center items-start pl-10 w-[80%] h-[80%] mt-4 max-w-md bg-gradient-to-r from-sky-150 to-purple-150 p-6 rounded-lg shadow-md backdrop-blur-2xl">
-        <div className="logo">
-          <h1 className="text-3xl font-[800] font-nato-serif">
-            <span className="text-purple-600 font-roboto font-[700] italic">
-              P
-            </span>
-            <span className="text-purple-900 font-roboto font-[700] italic">
-              C
-            </span>
-            <span className="text-yellow-500 font-roboto font-[700] italic">
-              S
-            </span>
-          </h1>
+    <div className="main min-h-screen bg-[linear-gradient(to_bottom_right,#87E5FF_0%,#FFDFaa_32%,#FF9797_42%,#E3DEDB_87%)] flex items-center justify-center p-6">
+      <section className="flex flex-col bg-white/80 backdrop-blur-lg shadow-xl rounded-2xl w-full max-w-xl p-10  justify-center items-start pl-10  bg-gradient-to-r from-sky-150 to-purple-150 ">
+        <div className="sign-in-form ">
+          <div className="logo text-4xl mb-4 font-nico tracking-widest">
+            <span className="font-nico text-[#4EC4D9]">P</span>
+            <span className="font-nico text-[#DB9118]">C</span>
+            <span className="font-nico text-[#D94E4E]">S</span>
+          </div>
         </div>
-        <div className="welcome-container mt-8 mb-6 ">
-          <h1 className="text-3xl font-[600]">Welcome Back</h1>
-          <p className="text-[0.7rem] mt-2 text-gray-600">
-            Please enter your log in details below
-          </p>
+
+        <div className="heading mb-2 ml-2">
+          <h1 className="text-2xl mb-1   font-nico tracking-wide">Sign-in</h1>
+          <p className=" text-gray-600 mt-1">Please enter your details below</p>
         </div>
+
         <form className="sign-in-form w-full" onSubmit={handleSubmit}>
           <div className="form-group w-full py-2.5">
             <input
@@ -90,17 +87,17 @@ const SignIn = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               required
-              className="w-full py-2.5 placeholder:pl-1.5 caret-purple-200 focus:outline-none focus:ring-2 focus:ring-gray-800 rounded-md border-2 border-gray-300"
+              className="px-4 py-2 rounded-lg  w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
             />
           </div>
-          <div className="form-group w-full py-2.5 mb-2.5">
+          <div className="form-group w-full py-2.5 ">
             <input
               type="password"
+              className="px-4 py-2 rounded-lg  w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              required
-              className="w-full py-2.5 placeholder:pl-1.5 caret-purple-200 focus:outline-none focus:ring-2 focus:ring-gray-800 rounded-md border-2 border-gray-300"
             />
           </div>
           <Button

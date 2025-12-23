@@ -3,7 +3,7 @@ import { Noto_Serif_Display } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer";
-import { AuchProvider } from "@context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
