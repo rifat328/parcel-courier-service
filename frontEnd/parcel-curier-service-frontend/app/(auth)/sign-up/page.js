@@ -159,7 +159,9 @@ const SignUp = () => {
             value={formData.name}
             onChange={handleChange}
           />
-          {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-sm ml-2 text-red-500">{errors.name}</p>
+          )}
           <input
             type="text"
             name="email"
@@ -169,7 +171,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
           {errors.email && (
-            <p className="text-sm text-red-500">{errors.email}</p>
+            <p className="text-sm ml-2 text-red-500">{errors.email}</p>
           )}
           <input
             type="text"
@@ -180,7 +182,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
           {errors.phone && (
-            <p className="text-sm text-red-500">{errors.phone}</p>
+            <p className="text-sm ml-2 text-red-500">{errors.phone}</p>
           )}
 
           <div className="flex items-center gap-2">
@@ -243,7 +245,7 @@ const SignUp = () => {
               </label>
             </div>
             {errors.role && (
-              <p className="text-sm text-red-500">{errors.role}</p>
+              <p className="text-sm ml-2 text-red-500">{errors.role}</p>
             )}
           </div>
 
@@ -257,7 +259,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
           {errors.address && (
-            <p className="text-sm text-red-500">{errors.address}</p>
+            <p className="text-sm ml-2 text-red-500">{errors.address}</p>
           )}
 
           <div className="relative w-full">
@@ -270,7 +272,7 @@ const SignUp = () => {
               onChange={handleChange}
             />
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password}</p>
+              <p className="text-sm ml-2 text-red-500">{errors.password}</p>
             )}
             <button
               type="button"
@@ -300,9 +302,35 @@ const SignUp = () => {
             {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
-      </div>
-      <div className="promo hidden md:flex items-center justify-center bg-gray-100">
-        <img src="null" alt="" srcset="" />
+
+        <div className="promo md:flex flex-col justify-center items-center bg-gradient-to-br from-[#4EC4D9] to-[#87E5FF] text-white p-10 relative">
+          {/* Decorative blur */}
+          <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/20 rounded-full blur-3xl" />
+
+          {/* Image */}
+          <img
+            src="/images/delivery.svg"
+            alt="Parcel Delivery"
+            className="w-72 mb-8 drop-shadow-xl"
+          />
+
+          {/* Text */}
+          <h2 className="text-3xl font-nico tracking-wide mb-4 text-center">
+            Fast & Reliable Delivery
+          </h2>
+
+          <p className="text-center text-white/90 max-w-sm">
+            Send, track, and manage parcels effortlessly. Built for customers,
+            agents, and admins.
+          </p>
+
+          {/* Feature list */}
+          <ul className="mt-6 space-y-2 text-sm">
+            <li>🚚 Real-time tracking</li>
+            <li>🔒 Secure authentication</li>
+            <li>⚡ Fast delivery workflow</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
