@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Image from "next/image";
 const SignUp = () => {
   const router = useRouter();
 
@@ -125,211 +126,256 @@ const SignUp = () => {
     //  returns true if no errors
     return Object.keys(newErrors).length === 0;
   };
+  // promo carousel ------------------
+  const promoSlides = [
+    // {
+    //   image: "/images/pcs-mascot.svg",
+    //   title: "Fast & Reliable Delivery",
+    //   description: "Send, track, and manage parcels effortlessly. ",
+    // },
+    {
+      image: "/images/Delivery-amico.svg",
+      title: "Real-time Tracking",
+      description:
+        "Track your parcels live with instant updates and notifications.",
+    },
+    {
+      image: "/images/Free-shipping-amico.svg",
+      title: "Free Shipping Opportunity",
+      description: "Free shipping across all over Bangladesh.",
+    },
+    {
+      image: "/images/In-no-time-amico.svg",
+      title: "Fastest Delivery in no time",
+      description: "Fastest Delivery across all over Bangladesh.",
+    },
+    {
+      image: "/images/messenger-animate.svg",
+      title: "Trasted Delivery Partner",
+      description: "Our Care about your parcel.",
+    },
+    {
+      image: "/images/Take Away-pana.svg",
+      title: "Most Secure platform",
+      description: "Your secure platform ensure growth for your business.",
+    },
+  ];
+  const [currentSlide, setCurrentSlide] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % promoSlides.length);
+    }, 4000); // 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="main min-h-screen bg-[linear-gradient(to_bottom_right,#87E5FF_0%,#FFDFaa_32%,#FF9797_42%,#E3DEDB_87%)] flex items-center justify-center p-6">
-      <div className="sign-up-form bg-white/80 backdrop-blur-lg shadow-xl rounded-2xl w-full max-w-xl p-10">
-        <div className="logo mb-6 text-4xl  font-nico tracking-widest">
-          <span className="font-nico text-[#4EC4D9]">P</span>
-          <span className="font-nico text-[#DB9118]">C</span>
-          <span className="font-nico text-[#D94E4E]">S</span>
-        </div>
-        {serverError.text && (
-          <div
-            className={`mb-4 p-3 rounded-lg text-center text-sm font-medium animate-pulse ${
-              serverError.type === "error"
-                ? "bg-red-100 text-red-500"
-                : "bg-green-100 text-green-500"
-            }`}
-          >
-            {serverError.text}
+      <div className="sign-up-form  bg-white/80 backdrop-blur-lg shadow-xl rounded-2xl w-full max-w-[90%] xl:max-w-6xl 2xl:max-w-7xl  p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] ">
+        <div class="form-section p-2 lg:pr-10">
+          <div className="logo mb-6 text-4xl  font-nico tracking-widest">
+            <span className="font-nico text-[#4EC4D9]">P</span>
+            <span className="font-nico text-[#DB9118]">C</span>
+            <span className="font-nico text-[#D94E4E]">S</span>
           </div>
-        )}
-        <div className="heading mb-2">
-          <h1 className="text-2xl mb-1   font-nico tracking-wide">Sign-up</h1>
-          <p className=" text-gray-600 mt-1">Please enter your details below</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="form flex flex-col gap-5">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && (
-            <p className="text-sm ml-2 text-red-500">{errors.name}</p>
-          )}
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <p className="text-sm ml-2 text-red-500">{errors.email}</p>
-          )}
-          <input
-            type="text"
-            name="phone"
-            placeholder="Phone"
-            className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-          {errors.phone && (
-            <p className="text-sm ml-2 text-red-500">{errors.phone}</p>
-          )}
-
-          <div className="flex items-center gap-2">
-            <span className="font-medium px-2">Role</span>
-
-            <div className="flex gap-3">
-              {/* Customer */}
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="customer"
-                  className="peer hidden"
-                  checked={formData.role === "customer"}
-                  onChange={handleChange}
-                />
-                <div
-                  className="
-                    px-4 py-2 rounded-full border
-                    border-gray-300 text-gray-600
-                    transition
-                    peer-checked:bg-[#4EC4D9]
-                    peer-checked:text-white
-                    peer-checked:border-[#4EC4D9]
-                     hover:border-[#4EC4D9]/60
-                      peer-focus-visible:ring-2
-                     peer-focus-visible:ring-[#4EC4D9]/40
-                  "
-                >
-                  Customer
-                </div>
-              </label>
-
-              {/* Agent */}
-              <label className="cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="agent"
-                  className="peer hidden"
-                  checked={formData.role === "agent"}
-                  onChange={handleChange}
-                />
-                <div
-                  className="
-                    px-4 py-2 rounded-full border
-                    border-gray-300 text-gray-600
-                    transition
-                    peer-checked:bg-[#4EC4D9]
-                    peer-checked:text-white
-                    peer-checked:border-[#4EC4D9]
-                     hover:border-[#4EC4D9]/60
-                      peer-focus-visible:ring-2
-                     peer-focus-visible:ring-[#4EC4D9]/40
-
-                  "
-                >
-                  Agent
-                </div>
-              </label>
+          {serverError.text && (
+            <div
+              className={`mb-4 p-3 rounded-lg text-center text-sm font-medium animate-pulse ${
+                serverError.type === "error"
+                  ? "bg-red-100 text-red-500"
+                  : "bg-green-100 text-green-500"
+              }`}
+            >
+              {serverError.text}
             </div>
-            {errors.role && (
-              <p className="text-sm ml-2 text-red-500">{errors.role}</p>
-            )}
+          )}
+          <div className="heading mb-2">
+            <h1 className="text-2xl mb-1   font-nico tracking-wide">Sign-up</h1>
+            <p className=" text-gray-600 mt-1">
+              Please enter your details below
+            </p>
           </div>
 
-          <textarea
-            name="address"
-            placeholder="Address"
-            rows={3}
-            spellCheck={false}
-            className="px-4 py-3 rounded-lg resize-none text-black focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:bg-white  bg-white"
-            value={formData.address}
-            onChange={handleChange}
-          />
-          {errors.address && (
-            <p className="text-sm ml-2 text-red-500">{errors.address}</p>
-          )}
-
-          <div className="relative w-full">
+          <form onSubmit={handleSubmit} className="form flex flex-col gap-5">
             <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              className="px-4 py-2 rounded-lg   w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
-              value={formData.password}
+              type="text"
+              name="name"
+              placeholder="Name"
+              className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
+              value={formData.name}
               onChange={handleChange}
             />
-            {errors.password && (
-              <p className="text-sm ml-2 text-red-500">{errors.password}</p>
+            {errors.name && (
+              <p className="text-sm ml-2 text-red-500">{errors.name}</p>
+            )}
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && (
+              <p className="text-sm ml-2 text-red-500">{errors.email}</p>
+            )}
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone"
+              className="px-4 py-2 rounded-lg   focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
+              value={formData.phone}
+              onChange={handleChange}
+            />
+            {errors.phone && (
+              <p className="text-sm ml-2 text-red-500">{errors.phone}</p>
+            )}
+
+            <div className="flex items-center gap-2">
+              <span className="font-medium px-2">Role</span>
+
+              <div className="flex gap-3">
+                {/* Customer */}
+                <label className="cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="customer"
+                    className="peer hidden"
+                    checked={formData.role === "customer"}
+                    onChange={handleChange}
+                  />
+                  <div
+                    className="
+                    px-4 py-2 rounded-full border
+                    border-gray-300 text-gray-600
+                    transition
+                    peer-checked:bg-[#4EC4D9]
+                    peer-checked:text-white
+                    peer-checked:border-[#4EC4D9]
+                     hover:border-[#4EC4D9]/60
+                      peer-focus-visible:ring-2
+                     peer-focus-visible:ring-[#4EC4D9]/40
+                  "
+                  >
+                    Customer
+                  </div>
+                </label>
+
+                {/* Agent */}
+                <label className="cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="agent"
+                    className="peer hidden"
+                    checked={formData.role === "agent"}
+                    onChange={handleChange}
+                  />
+                  <div
+                    className="
+                    px-4 py-2 rounded-full border
+                    border-gray-300 text-gray-600
+                    transition
+                    peer-checked:bg-[#4EC4D9]
+                    peer-checked:text-white
+                    peer-checked:border-[#4EC4D9]
+                     hover:border-[#4EC4D9]/60
+                      peer-focus-visible:ring-2
+                     peer-focus-visible:ring-[#4EC4D9]/40
+
+                  "
+                  >
+                    Agent
+                  </div>
+                </label>
+              </div>
+              {errors.role && (
+                <p className="text-sm ml-2 text-red-500">{errors.role}</p>
+              )}
+            </div>
+
+            <textarea
+              name="address"
+              placeholder="Address"
+              rows={3}
+              spellCheck={false}
+              className="px-4 py-3 rounded-lg resize-none text-black focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:bg-white  bg-white"
+              value={formData.address}
+              onChange={handleChange}
+            />
+            {errors.address && (
+              <p className="text-sm ml-2 text-red-500">{errors.address}</p>
+            )}
+
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                className="px-4 py-2 rounded-lg   w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              {errors.password && (
+                <p className="text-sm ml-2 text-red-500">{errors.password}</p>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="text-xl" />
+                ) : (
+                  <FaEye className="text-xl" />
+                )}
+              </button>
+            </div>
+
+            {/* submit button */}
+            {serverError.type === "error" && (
+              <p className="text-sm text-red-600 text-center">
+                {serverError.text}
+              </p>
             )}
             <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              type="submit"
+              className={`mt-4 w-full py-3 rounded-lg font-semibold transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-black text-white"
+              }`}
             >
-              {showPassword ? (
-                <FaEyeSlash className="text-xl" />
-              ) : (
-                <FaEye className="text-xl" />
-              )}
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
-          </div>
+          </form>
+        </div>
 
-          {/* submit button */}
-          {serverError.type === "error" && (
-            <p className="text-sm text-red-600 text-center">
-              {serverError.text}
-            </p>
-          )}
-          <button
-            type="submit"
-            className={`mt-4 w-full py-3 rounded-lg font-semibold transition ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-black text-white"
-            }`}
-          >
-            {loading ? "Creating Account..." : "Create Account"}
-          </button>
-        </form>
-
-        <div className="promo md:flex flex-col justify-center items-center bg-gradient-to-br from-[#4EC4D9] to-[#87E5FF] text-white p-10 relative">
-          {/* Decorative blur */}
-          <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/20 rounded-full blur-3xl" />
-
-          {/* Image */}
-          <img
-            src="/images/delivery.svg"
-            alt="Parcel Delivery"
-            className="w-72 mb-8 drop-shadow-xl"
+        {/* promo */}
+        <div className="promo relative hidden lg:block rounded-l-2xl overflow-hidden min-h-full">
+          {/* Background Image */}
+          <Image
+            key={currentSlide}
+            src={promoSlides[currentSlide].image}
+            fill
+            alt="Promo background"
+            className="object-cover animate-fade"
           />
 
-          {/* Text */}
-          <h2 className="text-3xl font-nico tracking-wide mb-4 text-center">
-            Fast & Reliable Delivery
-          </h2>
+          {/* Optional dark gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
 
-          <p className="text-center text-white/90 max-w-sm">
-            Send, track, and manage parcels effortlessly. Built for customers,
-            agents, and admins.
-          </p>
+          {/* Content pinned to bottom */}
+          <div className="absolute bottom-0 left-0 right-0 z-10 p-10 text-center">
+            <h2 className="text-3xl xl:text-4xl font-nico tracking-wide mb-3 animate-fade text-white">
+              {promoSlides[currentSlide].title}
+            </h2>
 
-          {/* Feature list */}
-          <ul className="mt-6 space-y-2 text-sm">
-            <li>🚚 Real-time tracking</li>
-            <li>🔒 Secure authentication</li>
-            <li>⚡ Fast delivery workflow</li>
-          </ul>
+            <p className="text-white/90 max-w-sm mx-auto animate-fade">
+              {promoSlides[currentSlide].description}
+            </p>
+          </div>
         </div>
       </div>
     </div>
