@@ -23,7 +23,6 @@ const SignIn = () => {
       return;
     }
     try {
-      console.log(apiBaseUrl);
       const res = await axios.post(
         `${apiBaseUrl}${signInRoute}`,
         {

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { UserProvider } from "@/context/UserContext";
+import { UserProvider } from "@/context/DashboardUserContext";
 import AdminSidebar from "@/components/AdminSidebar";
 import CustomerSidebar from "@/components/CustomerSidebar";
 import AgentSidebar from "@/components/AgentSidebar";
@@ -12,9 +12,9 @@ export default async function DashboardLayout({ children }) {
   if (!toekn) {
     redirect("/sign-in");
   }
-
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   // verify user
-  const response = await fetch("https://your-backend.com/api/me", {
+  const response = await fetch(`${apiBaseUrl}/api/me`, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
