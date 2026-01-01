@@ -18,7 +18,10 @@ userRouter.post("/", authorize, (reg, res) =>
 );
 userRouter.put("/:id", authorize, checkRole(["customer", "admin"]), updateUser);
 userRouter.delete("/:id", authorize, checkRole("admin"), deleteUser);
-
+userRouter.get("/me", authorize, (req, res) => {
+  const { password, __v, ...safeUser } = req.user._doc;
+  res.json(safeUser);
+});
 export default userRouter;
 // This file defines the user-related routes for the application.
 // It includes routes for getting a user, getting all users, updating a user, and deleting a user.
@@ -139,6 +142,23 @@ export default userRouter;
  *         description: Unauthorized - invalid or missing token
  *       403:
  *         description: Forbidden - Only admin can delete users
+ *       404:
+ *         description: User not found
+ */
+/**
+ * @swagger
+ * /api/v1/users/me:
+ *   get:
+ *     summary: validate user on local ui level
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *
+ *       responses:
+ *       200:
+ *         description: User details returned successfully
+ *       401:
+ *         description: Unauthorized - invalid or missing token
  *       404:
  *         description: User not found
  */
