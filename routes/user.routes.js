@@ -9,6 +9,10 @@ import { authorize, checkRole } from "../middlewares/auth.middleware.js";
 const userRouter = Router();
 
 userRouter.get("/", authorize, checkRole("admin"), getUsers);
+userRouter.get("/me", authorize, (req, res) => {
+  const { password, __v, ...safeUser } = req.user._doc;
+  res.json(safeUser);
+});
 userRouter.get("/:id", authorize, getUser);
 userRouter.post("/", authorize, (reg, res) =>
   res.send({
@@ -18,10 +22,10 @@ userRouter.post("/", authorize, (reg, res) =>
 );
 userRouter.put("/:id", authorize, checkRole(["customer", "admin"]), updateUser);
 userRouter.delete("/:id", authorize, checkRole("admin"), deleteUser);
-userRouter.get("/me", authorize, (req, res) => {
-  const { password, __v, ...safeUser } = req.user._doc;
-  res.json(safeUser);
-});
+// userRouter.get("/me", authorize, (req, res) => {
+//   const { password, __v, ...safeUser } = req.user._doc;
+//   res.json(safeUser);
+// });
 export default userRouter;
 // This file defines the user-related routes for the application.
 // It includes routes for getting a user, getting all users, updating a user, and deleting a user.

@@ -21,6 +21,11 @@ export const authorize = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
+    // 2 Fallback to HttpOnly cookie (MAIN)
+    if (!token && req.cookies?.token) {
+      token = req.cookies.token;
+    }
+
     if (!token) {
       return res.status(401).json({
         message: "Unauthorized access, no token provided",
