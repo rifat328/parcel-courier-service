@@ -145,20 +145,18 @@ export default userRouter;
  *       404:
  *         description: User not found
  */
+
 /**
  * @swagger
- * /api/v1/users/me:
+ * /api/users/me:
  *   get:
- *     summary: validate user on local ui level
+ *     summary: Get current authenticated user
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
- *
- *       responses:
+ *     responses:
  *       200:
- *         description: User details returned successfully
+ *         description: Authenticated user data
  *       401:
- *         description: Unauthorized - invalid or missing token
- *       404:
- *         description: User not found
+ *         description: Unauthorized
  */
