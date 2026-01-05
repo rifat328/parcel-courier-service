@@ -21,10 +21,20 @@ export default async function DashboardLayout({ children }) {
   console.log("VERIFY URL:", `${apiBaseUrl}${currentAuthenticatedUser}`);
 
   const response = await fetch(`${apiBaseUrl}${currentAuthenticatedUser}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
     cache: "no-store",
   });
-  if (!response.ok) redirect("/sign-in");
+  // DEBUGGING BLOCK START
+  if (!response.ok) {
+    // const errorText = await response.text();
+    // console.log("❌ BACKEND ERROR STATUS:", response.status);
+    // console.log("❌ BACKEND ERROR BODY:", errorText);
+    redirect("/sign-in");
+  }
+  // DEBUGGING BLOCK END
+  // if (!response.ok) redirect("/sign-in");
   const user = await response.json();
   console.log("COOKIE STORE:", cookieStore.getAll());
   return (
