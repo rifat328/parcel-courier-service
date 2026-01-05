@@ -45,7 +45,13 @@ export const signUp = async (req, res, next) => {
 
     await session.commitTransaction();
     session.endSession();
-
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: ms(JWT_EXPIRES_IN),
+    });
     res.status(201).json({
       success: true,
       message: "User created successfully",
@@ -89,13 +95,15 @@ export const signIn = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: NODE_ENV === "production",
-      sameSite: "Strict",
+      sameSite: "lax",
+      path: "/",
       maxAge: ms(JWT_EXPIRES_IN), // Convert to milliseconds
     });
     res.cookie("userId", user._id.toString(), {
       httpOnly: true,
       secure: NODE_ENV === "production",
-      sameSite: "Strict",
+      sameSite: "lax",
+      path: "/",
       maxAge: ms(JWT_EXPIRES_IN), // Convert to milliseconds
     });
 

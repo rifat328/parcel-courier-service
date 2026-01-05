@@ -148,7 +148,7 @@ export default userRouter;
 
 /**
  * @swagger
- * /api/users/me:
+ * /api/v1/users/me:
  *   get:
  *     summary: Get current authenticated user
  *     tags: [Users]

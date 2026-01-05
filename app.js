@@ -49,6 +49,15 @@ app.get("/", (req, res) => {
 
 //error handling middleware
 app.use(errorMiddleware);
+// test route
+app.get("/test-cookie", (req, res) => {
+  res.cookie("test", "hello", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
+  });
+  res.send("cookie set");
+});
 
 app.listen(PORT, async () => {
   console.log(`Server is running on port  : http://localhost:${PORT}`);
