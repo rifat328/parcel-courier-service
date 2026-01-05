@@ -51,6 +51,15 @@ const parcelSchema = new mongoose.Schema(
       lng: { type: Number, default: null },
     },
 
+    deliveryContactName: {
+      type: String,
+      require: true,
+    },
+    deliveryContactNumber: {
+      type: String,
+      require: true,
+    },
+
     trackingId: { type: String, unique: true }, // (Optional for QR/barcode)
   },
   { timestamps: true }
