@@ -20,7 +20,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // cors middleware setup
 const allowedOrigins = (CORS_ORIGIN || "http://localhost:3000").split(",");
-
+//CORS configuration
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -40,8 +40,6 @@ app.use(arcjetMiddleware);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/parcels", parcelRouter);
-
-//CORS configuration
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Parcel Currier Service");
