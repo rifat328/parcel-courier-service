@@ -39,11 +39,12 @@ export default async function DashboardLayout({ children }) {
   console.log("COOKIE STORE:", cookieStore.getAll());
   return (
     <UserProvider user={user}>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen bg-[#0D0D0D] px-5 py-5 text-white">
         {user.role === "admin" && <AdminSidebar />}
         {user.role === "customer" && <CustomerSidebar />}
         {user.role === "agent" && <AgentSidebar />}
-        <main className="flex-1">{children}</main>
+
+        <main className="bg-[#0D0D0D] ">{children}</main>
       </div>
     </UserProvider>
   );
