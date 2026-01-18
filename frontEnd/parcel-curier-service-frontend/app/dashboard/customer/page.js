@@ -1,3 +1,4 @@
+import ActiveParcel from "@/components/dashboard/active-parcel/ActiveParcel";
 import React from "react";
 
 const CustomerDashboard = () => {
@@ -22,7 +23,7 @@ const CustomerDashboard = () => {
         {/* Above the folde ( full view port) */}
         <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4 snap-start min-h-[calc(100vh-80px)]">
           <div className="active-parcel  md:col-span-5 lg:col-span-8  bg-card p-4 rounded-xl outline outline-red-500">
-            <h1>Active parcel</h1>
+            <ActiveParcel />
           </div>
           <div className="key-metrix  md:col-span-3 lg:col-span-4  space-y-4 outline outline-red-500">
             <h1>key matrix</h1>
