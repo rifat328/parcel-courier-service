@@ -23,7 +23,7 @@ const notoSerif = Noto_Serif_Display({
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 const nicoMoji = localFont({
   src: "../public/fonts/NicoMoji-Regular.ttf",

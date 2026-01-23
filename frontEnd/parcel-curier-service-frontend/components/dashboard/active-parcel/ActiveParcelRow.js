@@ -1,9 +1,9 @@
 import React from "react";
-
-const ActiveParcelRow = (parcel) => {
+import StatusBadge from "../StatusBadge";
+const ActiveParcelRow = ({ parcel }) => {
   return (
-    <tr className="border-b border-white/5 hover:bg-white/5 transition">
-      <td className="py-3">{parcel.id}</td>
+    <tr className="border-b text-white border-white/5 hover:bg-white/5 transition font-roboto">
+      <td className="py-3 text-white">{parcel.id}</td>
       <td>{parcel.address}</td>
       <td>{parcel.date}</td>
       <td>
