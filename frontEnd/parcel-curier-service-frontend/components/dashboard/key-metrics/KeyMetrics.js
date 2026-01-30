@@ -12,7 +12,7 @@ const KeyMetrics = () => {
 
   return (
     <section className=" font-roboto">
-      <h1 className="mb-4 text-lg font-semibold">Key Matrix</h1>
+      <h1 className="my-5  text-lg ">Key Matrix</h1>
       <div
         aria-label="business data"
         className="business-data grid grid-cols-1 gap-4"

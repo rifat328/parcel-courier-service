@@ -30,10 +30,10 @@ const CustomerDashboard = () => {
       </header>
 
       {/* Scroll container (ONLY ONE) */}
-      <main className="flex-1 overflow-y-auto mt-3 px-4">
+      <main className="flex-1 overflow-y-auto mt-3 ">
         {/* Above the fold */}
         <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4">
-          <div className="md:col-span-5 lg:col-span-8 p-1 rounded-xl border border-red-500 ">
+          <div className="md:col-span-5 lg:col-span-8 p-1  border border-red-500 ">
             <ActiveParcel />
           </div>
 

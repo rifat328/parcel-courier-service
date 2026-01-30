@@ -3,7 +3,7 @@ import ActiveParcelTable from "./ActiveParcelTable";
 import mockParcels from "../mockParcel";
 const ActiveParcel = () => {
   return (
-    <section className=" h-full flex flex-col">
+    <section className=" h-full flex flex-col border m-4 border-red-500">
       <div className="px-4 pt-1">
         <h2 className="m-0 md:text-lg text-lg font-roboto font-regular ">
           Active Parcel
