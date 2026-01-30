@@ -9,7 +9,7 @@ const ActiveParcel = () => {
           Active Parcel
         </h2>
       </div>
-      <div className="p-4 pt-2 mt-2 bg-card-gray rounded-2xl overflow-x-auto overflow-y-auto ">
+      <div className="p-4 pt-2 mt-2 bg-card-gray h-full rounded-2xl overflow-x-auto overflow-y-auto ">
         <ActiveParcelTable parcels={mockParcels} />
       </div>
     </section>
