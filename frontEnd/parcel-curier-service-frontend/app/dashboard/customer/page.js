@@ -29,7 +29,7 @@ const CustomerDashboard = () => {
         </div>
       </header>
 
-      {/* 🧠 Scroll container (ONLY ONE) */}
+      {/* Scroll container (ONLY ONE) */}
       <main className="flex-1 overflow-y-auto mt-3 px-4">
         {/* Above the fold */}
         <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4">
