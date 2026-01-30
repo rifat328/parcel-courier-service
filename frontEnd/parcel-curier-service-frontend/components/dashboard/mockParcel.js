@@ -71,6 +71,46 @@ const mockParcels = [
     payment: "Unpaid",
     amount: 1890,
   },
+  {
+    id: "PC-1030",
+    address: "Mirpur,Dhaka, Bangladesh",
+    date: "2026-01-17",
+    status: "In Transit",
+    payment: "Paid",
+    amount: 1450,
+  },
+  {
+    id: "PC-1031",
+    address: "Rangpur",
+    date: "2026-01-15",
+    status: "Delivered",
+    payment: "Paid",
+    amount: 8500,
+  },
+  {
+    id: "PC-1032",
+    address: "Khulna",
+    date: "2026-01-18",
+    status: "Booked",
+    payment: "Unpaid",
+    amount: 2100,
+  },
+  {
+    id: "PC-1033",
+    address: "Uttara,Dhaka, Bangladesh",
+    date: "2026-01-17",
+    status: "In Transit",
+    payment: "Paid",
+    amount: 1550,
+  },
+  {
+    id: "PC-1034",
+    address: "Barisal",
+    date: "2026-01-16",
+    status: "Delivered",
+    payment: "Paid",
+    amount: 7800,
+  },
 ];
 
 export default mockParcels;

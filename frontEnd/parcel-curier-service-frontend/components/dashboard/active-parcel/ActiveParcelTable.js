@@ -3,10 +3,10 @@ import ActiveParcelRow from "./ActiveParcelRow";
 
 const ActiveParcelTable = ({ parcels }) => {
   return (
-    <table className="w-full text-sm">
-      <thead className="text-white/60 border-b border-white/10">
+    <table className="w-full text-sm bg-card-gray ">
+      <thead className="sticky top-0  text-white/60 border-b border-white/10">
         <tr>
-          <th className="text-left py-3">Id</th>
+          <th className="text-left py-3 ">Id</th>
           <th>Address</th>
           <th>Date</th>
           <th>Status</th>
