@@ -1,5 +1,5 @@
 import ActiveParcel from "@/components/dashboard/active-parcel/ActiveParcel";
-import KeyMatrix from "@/components/dashboard/key-matrix/KeyMatrix";
+import KeyMetrics from "@/components/dashboard/key-metrics/KeyMetrics";
 import React from "react";
 
 const CustomerDashboard = () => {
@@ -38,7 +38,7 @@ const CustomerDashboard = () => {
           </div>
 
           <div className="md:col-span-3 lg:col-span-4 space-y-4 border border-red-500">
-            <KeyMatrix />
+            <KeyMetrics />
           </div>
         </div>
 
