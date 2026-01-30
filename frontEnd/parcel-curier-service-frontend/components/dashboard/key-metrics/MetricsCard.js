@@ -12,8 +12,8 @@ const MetricsCard = ({ title, number, trend }) => {
           <h2 className="font-roboto font-bold text-2xl">{number}</h2>
         </div>
         {/* right content : Chart */}
-        <div className="graph">
-          <MetricLineChart />
+        <div className="graph h-[60px] w-[120px]">
+          <MetricLineChart data={trend} />
         </div>
       </div>
     </>
