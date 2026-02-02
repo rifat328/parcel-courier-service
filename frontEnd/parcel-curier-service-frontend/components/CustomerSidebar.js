@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import LogoMain from "./LogoMain";
+import LogOutCard from "./dashboard/LogOutCard";
 export default function CustomerSidebar() {
   const navElements = [
     { title: "Dashboard", link: "", iconeLink: "" },
@@ -30,9 +31,9 @@ export default function CustomerSidebar() {
         <LogoMain size="5xl" />
       </div>
 
-      <nav className="w-64 bg-[#0D0D0D] text-white py-4">
+      <nav className="w-64 bg-[#0D0D0D] text-white py-4  ">
         <ul>{navRender}</ul>
-        {/* {logout card} */}
+        <LogOutCard userName="Rifat Hossain" userRole="Customer" />
       </nav>
     </div>
   );
