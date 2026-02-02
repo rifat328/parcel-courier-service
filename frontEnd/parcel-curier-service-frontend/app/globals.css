@@ -81,7 +81,7 @@
   --sidebar-ring: oklch(0.709 0.01 56.259);
 }
 
-/* ✅ Custom autofill fix */
+/* Custom autofill fix */
 input:-webkit-autofill,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:hover,
@@ -94,7 +94,7 @@ input:-webkit-autofill:active {
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
+  --background: oklch(9.13% 0 0);
   --foreground: oklch(0.985 0.001 106.423);
   --card: oklch(0.216 0.006 56.043);
   --card-foreground: oklch(0.985 0.001 106.423);
