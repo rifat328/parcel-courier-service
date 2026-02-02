@@ -36,7 +36,7 @@ export const signUp = async (req, res, next) => {
           role: req.body.role, // Default role is 'customer'
         },
       ],
-      { session }
+      { session },
     );
 
     const token = jwt.sign({ userId: newUsers[0]._id }, JWT_SECRET, {
@@ -121,6 +121,15 @@ export const signIn = async (req, res, next) => {
 };
 
 export const signOut = async (req, res, next) => {
-  //Implement Sign Out logic here
-  res.send({ title: "sign out" });
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      semSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
 };
