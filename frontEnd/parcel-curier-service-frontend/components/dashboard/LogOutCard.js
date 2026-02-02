@@ -22,7 +22,7 @@ const LogOutCard = (props) => {
   };
 
   return (
-    <div className="bg-card-gray p-3 rounded-xl w-auto flex items-center gap-3">
+    <div className="bg-card-gray p-2 rounded-xl w-auto flex items-center gap-3">
       <div
         className="log_out w-[50] h-[50] rounded-[50%] bg-accent overflow-hidden cursor-pointer hover:scale-110 hover:opacity-80 transition-transform duration-200 relative group"
         onClick={goToProfile}

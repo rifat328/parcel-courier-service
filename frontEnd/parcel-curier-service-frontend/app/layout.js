@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
       >
         {/* place layout here like navbar*/}
         <AuthProvider>{children}</AuthProvider>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
