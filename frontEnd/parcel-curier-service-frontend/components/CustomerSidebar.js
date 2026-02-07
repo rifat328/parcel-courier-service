@@ -14,27 +14,42 @@ import {
 } from "lucide-react";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { FaTruck } from "react-icons/fa";
-import { IoIosRadio } from "react-icons/io";
 import { FaBoxOpen } from "react-icons/fa";
 export default function CustomerSidebar() {
   const pathname = usePathname();
 
   const navElements = [
     { title: "Dashboard", link: "/dashboard/customer", iconeLink: House },
-    { title: "Book Parcel", link: "/dashboard/customer/book", iconeLink: "" },
-    { title: "My Parcels", link: "/dashboard/customer/parcels", iconeLink: "" },
+    {
+      title: "Book Parcel",
+      link: "/dashboard/customer/book",
+      iconeLink: FaBoxOpen,
+    },
+    {
+      title: "My Parcels",
+      link: "/dashboard/customer/parcels",
+      iconeLink: FaTruck,
+    },
     {
       title: "Live Tracking",
       link: "/dashboard/customer/tracking",
-      iconeLink: "",
+      iconeLink: Radio,
     },
     {
       title: "Payments",
       link: "/dashboard/customer/payments",
-      iconeLink: "",
+      iconeLink: RiMoneyDollarBoxFill,
     },
-    { title: "Profile", link: "/dashboard/customer/profile", iconeLink: "" },
-    { title: "Reports", link: "/dashboard/customer/reports", iconeLink: "" },
+    {
+      title: "Profile",
+      link: "/dashboard/customer/profile",
+      iconeLink: UserPen,
+    },
+    {
+      title: "Reports",
+      link: "/dashboard/customer/reports",
+      iconeLink: BookCheck,
+    },
   ];
 
   const navRender = navElements.map((element) => {
@@ -44,7 +59,7 @@ export default function CustomerSidebar() {
     return (
       <li
         key={element.title}
-        className={`relative ${isActive ? "bg-[#1A1A1A]" : "currentColor"} rounded-2xl pl-0.5`}
+        className={`relative ${isActive ? "bg-[#1A1A1A]" : "currentColor"} rounded-2xl pl-4`}
       >
         <Link
           href={element.link}
