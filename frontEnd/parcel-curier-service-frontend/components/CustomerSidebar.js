@@ -4,12 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LogoMain from "./LogoMain";
 import LogOutCard from "./dashboard/LogOutCard";
-
+import { House } from "lucide-react";
 export default function CustomerSidebar() {
   const pathname = usePathname();
 
   const navElements = [
-    { title: "Dashboard", link: "/dashboard/customer", iconeLink: "" },
+    { title: "Dashboard", link: "/dashboard/customer", iconeLink: House },
     { title: "Book Parcel", link: "/dashboard/customer/book", iconeLink: "" },
     { title: "My Parcels", link: "/dashboard/customer/parcels", iconeLink: "" },
     {
@@ -17,24 +17,35 @@ export default function CustomerSidebar() {
       link: "/dashboard/customer/tracking",
       iconeLink: "",
     },
-    { title: "Payments", link: "/dashboard/customer/payments", iconeLink: "" },
+    {
+      title: "Payments",
+      link: "/dashboard/customer/payments",
+      iconeLink: "",
+    },
     { title: "Profile", link: "/dashboard/customer/profile", iconeLink: "" },
     { title: "Reports", link: "/dashboard/customer/reports", iconeLink: "" },
   ];
 
   const navRender = navElements.map((element) => {
     const isActive = pathname === element.link;
-
+    const IconComponent = element.iconeLink;
+    //#D94E4E
     return (
-      <li key={element.title}>
+      <li key={element.title} className="flex  gap-4 items-center ">
+        {IconComponent && (
+          <IconComponent
+            className="w-5 h-5 md:w-7 md:h-7"
+            style={{ color: isActive ? "#D94E4E" : "currentColor" }}
+          />
+        )}
         <Link
           href={element.link}
           className={`
-            block pr-4 py-3 rounded-xl text-sm md:text-lg font-medium transition
+            block pr-4 py-2 rounded-xl text-sm font-roboto md:text-lg font-medium transition 
             ${
               isActive
                 ? "bg-gradient-to-r from-red-500/20 to-transparent shadow-[0_0_15px_rgba(239,68,68,0.3)] text-white"
-                : "hover:bg-white/10"
+                : "text-white/50 hover:bg-white/10"
             }
           `}
         >
