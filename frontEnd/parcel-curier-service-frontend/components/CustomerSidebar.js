@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import LogoMain from "./LogoMain";
 import LogOutCard from "./dashboard/LogOutCard";
 
 export default function CustomerSidebar() {
+  const pathname = usePathname();
+
   const navElements = [
     { title: "Dashboard", link: "/dashboard/customer", iconeLink: "" },
     { title: "Book Parcel", link: "/dashboard/customer/book", iconeLink: "" },
@@ -19,16 +22,27 @@ export default function CustomerSidebar() {
     { title: "Reports", link: "/dashboard/customer/reports", iconeLink: "" },
   ];
 
-  const navRender = navElements.map((element) => (
-    <li key={element.title}>
-      <Link
-        href={element.link}
-        className="block pr-4 py-3 rounded-xl text-sm md:text-xl font-medium hover:bg-white/10 transition"
-      >
-        {element.title}
-      </Link>
-    </li>
-  ));
+  const navRender = navElements.map((element) => {
+    const isActive = pathname === element.link;
+
+    return (
+      <li key={element.title}>
+        <Link
+          href={element.link}
+          className={`
+            block pr-4 py-3 rounded-xl text-sm md:text-lg font-medium transition
+            ${
+              isActive
+                ? "bg-gradient-to-r from-red-500/20 to-transparent shadow-[0_0_15px_rgba(239,68,68,0.3)] text-white"
+                : "hover:bg-white/10"
+            }
+          `}
+        >
+          {element.title}
+        </Link>
+      </li>
+    );
+  });
 
   return (
     <div className="main_nav w-64 h-full flex flex-col text-white flex-shrink-0">
