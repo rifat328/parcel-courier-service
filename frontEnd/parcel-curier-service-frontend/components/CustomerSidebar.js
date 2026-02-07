@@ -4,7 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LogoMain from "./LogoMain";
 import LogOutCard from "./dashboard/LogOutCard";
-import { House } from "lucide-react";
+import {
+  House,
+  Radio,
+  UserPen,
+  BookCheck,
+  PanelRightClose,
+  PanelRightOpen,
+} from "lucide-react";
+import { RiMoneyDollarBoxFill } from "react-icons/ri";
+import { FaTruck } from "react-icons/fa";
+import { IoIosRadio } from "react-icons/io";
+import { FaBoxOpen } from "react-icons/fa";
 export default function CustomerSidebar() {
   const pathname = usePathname();
 
@@ -29,27 +40,43 @@ export default function CustomerSidebar() {
   const navRender = navElements.map((element) => {
     const isActive = pathname === element.link;
     const IconComponent = element.iconeLink;
-    //#D94E4E
+
     return (
-      <li key={element.title} className="flex  gap-4 items-center ">
-        {IconComponent && (
-          <IconComponent
-            className="w-5 h-5 md:w-7 md:h-7"
-            style={{ color: isActive ? "#D94E4E" : "currentColor" }}
-          />
-        )}
+      <li
+        key={element.title}
+        className={`relative ${isActive ? "bg-[#1A1A1A]" : "currentColor"} rounded-2xl pl-0.5`}
+      >
         <Link
           href={element.link}
           className={`
-            block pr-4 py-2 rounded-xl text-sm font-roboto md:text-lg font-medium transition 
-            ${
-              isActive
-                ? "bg-gradient-to-r from-red-500/20 to-transparent shadow-[0_0_15px_rgba(239,68,68,0.3)] text-white"
-                : "text-white/50 hover:bg-white/10"
-            }
+            flex items-center gap-4 pr-4 py-3 rounded-xl text-sm font-roboto md:text-lg font-medium  transition-all duration-300
+            ${isActive ? "text-white " : "text-white/50 hover:text-white/70"}  
           `}
         >
-          {element.title}
+          {/* Multiple layered glows for realistic effect */}
+          {isActive && (
+            <>
+              {/* Main square light source */}
+              <div className="absolute -left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#D94E4E]  blur-[1px] opacity-100" />
+
+              {/* Secondary glow layer for more spread */}
+              <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-8 h-6 bg-gradient-to-r  from-[#D94E4E]/80 via-[#D94E4E]/40 to-transparent blur-[4px]" />
+
+              {/* Horizontal gradient overlay */}
+              {/* <div className="absolute left-0 top-0 bottom-0 w-32 hover:bg-gradient-to-r from-[#D94E4E]/20 via-[#D94E4E]/10 to-transparent rounded-xl" /> */}
+            </>
+          )}
+
+          {/* Icon */}
+          {IconComponent && (
+            <IconComponent
+              className="w-5 h-5 md:w-7 md:h-7 relative z-10"
+              style={{ color: isActive ? "#D94E4E" : "currentColor" }}
+            />
+          )}
+
+          {/* Text */}
+          <span className="relative z-10">{element.title}</span>
         </Link>
       </li>
     );
@@ -64,7 +91,7 @@ export default function CustomerSidebar() {
 
       {/* nav section - scrollable */}
       <nav className="bg-[#0D0D0D] text-white pt-4 flex-1 overflow-y-auto min-h-0">
-        <ul className="space-y-2 px-4">{navRender}</ul>
+        <ul className="space-y-2 pr-4">{navRender}</ul>
       </nav>
 
       {/* logout card - fixed at bottom */}
