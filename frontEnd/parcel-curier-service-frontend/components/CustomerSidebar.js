@@ -12,8 +12,6 @@ import {
   BookCheck,
   PanelRightClose,
   PanelRightOpen,
-  Menu,
-  X,
 } from "lucide-react";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { FaTruck } from "react-icons/fa";
@@ -93,7 +91,7 @@ export default function CustomerSidebar() {
             />
           )}
 
-          {/* Text - hidden on tablet, visible on mobile (when open) and laptop+ */}
+          {/* Text - hidden on tablet, visible on mobile (when open) and laptop++ */}
           <span className="relative z-10 md:hidden lg:block">
             {element.title}
           </span>
@@ -107,9 +105,13 @@ export default function CustomerSidebar() {
       {/* Mobile Toggle Button - only show on mobile, hide on tablet+ */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#1A1A1A] rounded-lg text-white"
+        className="md:hidden fixed top-8 left-1 z-50 p-2 bg-[#1A1A1A] text-[#D94E4E] rounded-lg "
       >
-        {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+        {isMobileOpen ? (
+          <PanelRightOpen size={24} />
+        ) : (
+          <PanelRightClose size={24} />
+        )}
       </button>
 
       {/* Overlay for mobile only */}
@@ -123,21 +125,21 @@ export default function CustomerSidebar() {
       {/* Sidebar */}
       <div
         className={`
-          main_nav h-full flex flex-col text-white flex-shrink-0 bg-[#0D0D0D] z-40
-          transition-all duration-300
+          main_nav h-full flex flex-col text-white flex-shrink-0 bg-[#0D0D0D] 
+          transition-all duration-300 overflow-hidden z-20
           
           ${/* Position: fixed on mobile only, relative on tablet+ */ ""}
-          fixed md:relative
+          fixed md:relative 
           
           ${/* Transform: slide on mobile only, always visible on tablet+ */ ""}
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
           
           ${/* Width: full on mobile when open, icon-only on tablet, full on laptop+ */ ""}
-          ${isMobileOpen ? "w-64" : "w-0"} md:w-20 lg:w-64
+           md:w-20 lg:w-64 md:outline-1 md:outline-white/20 lg:outline-none md:rounded-2xl lg:rounded-none
         `}
       >
         {/* logo */}
-        <div className="flex justify-center p-4 flex-shrink-0">
+        <div className="flex justify-center p-4 flex-shrink-0  ">
           <LogoMain size="5xl" className="hidden lg:block" />
         </div>
 
