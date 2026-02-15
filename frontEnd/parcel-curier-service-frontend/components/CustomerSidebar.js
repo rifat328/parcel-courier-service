@@ -105,7 +105,7 @@ export default function CustomerSidebar() {
       {/* Mobile Toggle Button - only show on mobile, hide on tablet+ */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="md:hidden fixed top-8 left-1 z-50 p-2 bg-[#1A1A1A] text-[#D94E4E] rounded-lg "
+        className="md:hidden fixed top-6 left-3 z-50 p-2 bg-[#1A1A1A] text-[#D94E4E] rounded-lg "
       >
         {isMobileOpen ? (
           <PanelRightOpen size={24} />
@@ -126,7 +126,7 @@ export default function CustomerSidebar() {
       <div
         className={`
           main_nav h-full flex flex-col text-white flex-shrink-0 bg-[#0D0D0D] 
-          transition-all duration-300 overflow-hidden z-20
+          transition-all duration-300 overflow-hidden z-40
           
           ${/* Position: fixed on mobile only, relative on tablet+ */ ""}
           fixed md:relative 
