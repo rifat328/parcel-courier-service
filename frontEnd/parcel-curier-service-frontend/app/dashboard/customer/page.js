@@ -13,10 +13,7 @@ const CustomerDashboard = () => {
   return (
     <section className="flex flex-col h-full w-full font-roboto">
       {/* Sticky Header */}
-      <header
-        className="sticky top-0 z-20 h-[80px] rounded-t-4xl"
-        style={backgroundStyle}
-      >
+      <header className="sticky top-0 z-20 h-[80px] rounded-t-4xl background-mesh-style">
         <div className="flex h-full items-center px-5 justify-between">
           <input
             type="text"
@@ -33,11 +30,11 @@ const CustomerDashboard = () => {
       <main className="flex-1 mt-3 pb-5">
         {/* Above the fold */}
         <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4 min-h-[calc(100vh-80px)]">
-          <div className="md:col-span-5 lg:col-span-8 p-1 h-full border border-red-500">
+          <div className="md:col-span-5 lg:col-span-8 p-1 h-full  background-mesh-style">
             <ActiveParcel />
           </div>
 
-          <div className="md:col-span-3 lg:col-span-4 space-y-4 border border-red-500">
+          <div className="md:col-span-3 lg:col-span-4 space-y-4 background-mesh-style">
             <KeyMetrics />
           </div>
         </div>
