@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { LogOut as LogOutIcon } from "lucide-react";
 const LogOutCard = (props) => {
   const router = useRouter();
 
@@ -17,15 +18,12 @@ const LogOutCard = (props) => {
     router.push("/sign-in");
   };
 
-  const goToProfile = () => {
-    router.push("/profile");
-  };
-
   return (
-    <div className="bg-card-gray p-2 rounded-xl w-auto flex items-center gap-3">
+    <div className=" flex items-center justify-between lg:justify-start gap-3 bg-[#1A1A1A] md:bg-transparent lg:bg-[#1A1A1A] p-2 lg:p-3 rounded-2xl transition-all duration-300">
+      {/* Profile Image - Clickable */}
       <div
-        className="log_out w-[50] h-[50] rounded-[50%] bg-accent overflow-hidden cursor-pointer hover:scale-110 hover:opacity-80 transition-transform duration-200 relative group"
-        onClick={goToProfile}
+        className="log_out relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-transparent hover:border-[#D94E4E] transition-all cursor-pointer group"
+        onClick={() => router.push("/profile")}
         aria-label="Edit Profile"
         title="Profile"
       >
@@ -33,33 +31,31 @@ const LogOutCard = (props) => {
           key={"logout_img1_women.jpg"}
           src="/logout_image/logout_img1_women.jpg"
           alt="profile Image"
-          width={50}
-          height={50}
-          className="object-cover w-full h-full"
+          fill
+          className="object-cover "
         />
+        {/* w-full h-full width={50}
+        height={50} */}
         <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-10 whitespace-nowrap">
           Profile
         </span>
       </div>
-
-      <div className="flex flex-col">
-        <p className="font-semibold text-[#D9D9D9]">{props.userName}</p>
-        <p className="text-sm text-gray-600">{props.userRole}</p>
+      {/* User Info - Hidden on tablet icon-view (md), visible on mobile and desktop (lg) */}
+      <div className="hidden lg:flex flex-col flex-1 min-w-0">
+        <p className="font-semibold text-sm text-[#D9D9D9] truncate">
+          {props.userName}
+        </p>
+        <p className="text-xs text-gray-500 truncate">{props.userRole}</p>
       </div>
 
+      {/* Logout Button */}
+
       <button
-        className="ml-auto w-[40] h-[40] hover:scale-110 hover:opacity-80 transition-transform duration-200 cursor-pointer relative group"
+        className="flex-shrink-0 p-2 text-gray-400 hover:text-[#D94E4E] hover:bg-white/5 rounded-xl transition-all"
         onClick={logOut}
         title="Logout"
       >
-        <Image
-          key={"logout_icon.png"}
-          alt="logout icone"
-          width={40}
-          height={40}
-          src="/logout_image/logout_icon.png"
-          className="object-cover w-full h-full"
-        />
+        <LogOutIcon size={20} />
         <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
           Logout
         </span>

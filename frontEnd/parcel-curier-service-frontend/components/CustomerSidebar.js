@@ -103,27 +103,30 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
           fixed md:relative 
           
           ${/* Transform: slide on mobile only, always visible on tablet+ */ ""}
-          ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+          ${isMobileOpen ? "translate-x-0 w-50" : "-translate-x-full"} md:translate-x-0
           
           ${/* Width: full on mobile when open, icon-only on tablet, full on laptop+ */ ""}
-           md:w-20 lg:w-64 md:outline-1 md:outline-white/20 lg:outline-none md:rounded-2xl lg:rounded-none
+            md:w-20 lg:w-64 border-r border-white/10  md:outline-1 md:outline-white/20 lg:outline-none md:rounded-2xl lg:rounded-none
         `}
       >
         {/* logo */}
         <div className="flex justify-center p-4 flex-shrink-0  ">
           <LogoMain size="5xl" className="hidden lg:block" />
+          <div className="lg:hidden w-10 h-10 bg-[#D94E4E] rounded-lg" />
+          {/* Mobile placeholder */}
         </div>
 
         {/* nav section - scrollable */}
-        <nav className="text-white pt-4 flex-1 overflow-y-auto min-h-0">
+        <nav className="text-white pt-4 flex-1 overflow-y-auto min-h-0 custom-scrollbar px-4">
           <ul className="space-y-2 pr-4">{navRender}</ul>
         </nav>
 
         {/* logout card - fixed at bottom - hide on tablet icon-only view */}
-        <div className="flex-shrink-0 pr-5 py-4 hidden lg:block">
-          <div className="rounded-2xl border border-white/10 transition duration-75 hover:shadow-xl hover:shadow-white/20">
-            <LogOutCard userName="Rifat Hossain" userRole="Customer" />
-          </div>
+        {/* <div className=" pr-2 md:pr-5 py-4 ">
+          
+        </div> */}
+        <div className="rounded-2xl flex-shrink-0 mt-auto border-t border-white/5 bg-[#0D0D0D] transition duration-75 hover:shadow-xl hover:shadow-white/20">
+          <LogOutCard userName="Rifat Hossain" userRole="Customer" />
         </div>
       </div>
     </>

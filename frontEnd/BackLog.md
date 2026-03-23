@@ -2,7 +2,7 @@
 
 ### **[Customer]**
 
-    -navbar redesign (responsive & layout problem for mobile nav open and close button with fixed header [overlaping design]).
+    -navbar Hydration issues, logOut card responsivenes etc .
     - Active parcel section [responsiveness and polish]
     - key Metrics [ UI/UX polish & responsiveness ]
     - timeline section and history section [not started ]
