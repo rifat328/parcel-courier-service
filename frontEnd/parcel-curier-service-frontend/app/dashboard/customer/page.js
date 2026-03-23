@@ -1,14 +1,11 @@
 import ActiveParcel from "@/components/dashboard/active-parcel/ActiveParcel";
 import KeyMetrics from "@/components/dashboard/key-metrics/KeyMetrics";
-import Header from "@/components/dashboard/Header";
+
 import React from "react";
 
 const CustomerDashboard = () => {
   return (
     <section className="flex flex-col h-full w-full font-roboto">
-      {/* Sticky Header */}
-      <Header />
-
       {/* Scrollable content */}
       <main className="flex-1 mt-3 pb-5">
         {/* Above the fold */}

@@ -4,6 +4,7 @@ import { UserProvider } from "@/context/DashboardUserContext";
 import AdminSidebar from "@/components/AdminSidebar";
 import CustomerSidebar from "@/components/CustomerSidebar";
 import AgentSidebar from "@/components/AgentSidebar";
+import DashboardUI from "@/components/dashboard/DashboardUI";
 
 export default async function DashboardLayout({ children }) {
   const cookieStore = await cookies();
@@ -37,17 +38,21 @@ export default async function DashboardLayout({ children }) {
   // if (!response.ok) redirect("/sign-in");
   const user = await response.json();
   console.log("COOKIE STORE:", cookieStore.getAll());
-  return (
-    <UserProvider user={user}>
-      <div className="flex h-screen w-full bg-[#0D0D0D] p-5 text-white overflow-hidden">
-        {user.role === "admin" && <AdminSidebar />}
-        {user.role === "customer" && <CustomerSidebar />}
-        {user.role === "agent" && <AgentSidebar />}
 
-        <main className="bg-[#0D0D0D] flex-1 w-full overflow-y-auto ">
-          {children}
-        </main>
-      </div>
+  let selectedSidebar;
+  if (user.role === "customer") {
+    selectedSidebar = <CustomerSidebar />;
+  } else if (user.role === "admin") {
+    selectedSidebar = <AdminSidebar />;
+  } else {
+    selectedSidebar = <AgentSidebar />;
+  }
+
+  return (
+    //  sideBar and main passed to a shell /UI provider because this layout is
+    //   server component
+    <UserProvider user={user}>
+      <DashboardUI sidebar={selectedSidebar}>{children}</DashboardUI>
     </UserProvider>
   );
 }
