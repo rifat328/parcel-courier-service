@@ -1,30 +1,13 @@
 import ActiveParcel from "@/components/dashboard/active-parcel/ActiveParcel";
 import KeyMetrics from "@/components/dashboard/key-metrics/KeyMetrics";
+import Header from "@/components/dashboard/Header";
 import React from "react";
 
 const CustomerDashboard = () => {
-  const backgroundStyle = {
-    backgroundColor: "#0D0D0D",
-    backgroundImage: "url('/textures/card-noise.png')",
-    backgroundRepeat: "repeat",
-    backgroundSize: "120px 120px",
-  };
-
   return (
     <section className="flex flex-col h-full w-full font-roboto">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-20 h-[80px] rounded-t-4xl background-mesh-style">
-        <div className="flex h-full items-center px-5 justify-between">
-          <input
-            type="text"
-            className="bg-[#0D0D0D] p-3 rounded-xl placeholder:text-white/80 text-xs focus:outline-2"
-            placeholder="Search #Id"
-          />
-          <button className="bg-black rounded-2xl px-4 py-3">
-            Create Parcel
-          </button>
-        </div>
-      </header>
+      <Header />
 
       {/* Scrollable content */}
       <main className="flex-1 mt-3 pb-5">

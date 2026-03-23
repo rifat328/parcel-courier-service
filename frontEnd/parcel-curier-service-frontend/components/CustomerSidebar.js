@@ -2,24 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import LogoMain from "./LogoMain";
 import LogOutCard from "./dashboard/LogOutCard";
-import {
-  House,
-  Radio,
-  UserPen,
-  BookCheck,
-  PanelRightClose,
-  PanelRightOpen,
-} from "lucide-react";
+import { House, Radio, UserPen, BookCheck } from "lucide-react";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { FaTruck } from "react-icons/fa";
 import { FaBoxOpen } from "react-icons/fa";
 
-export default function CustomerSidebar() {
+export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
   const pathname = usePathname();
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navElements = [
     { title: "Dashboard", link: "/dashboard/customer", iconeLink: House },
@@ -102,26 +93,6 @@ export default function CustomerSidebar() {
 
   return (
     <>
-      {/* Mobile Toggle Button - only show on mobile, hide on tablet+ */}
-      <button
-        onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="md:hidden fixed top-6 left-3 z-50 p-2 bg-[#1A1A1A] text-[#D94E4E] rounded-lg "
-      >
-        {isMobileOpen ? (
-          <PanelRightOpen size={24} />
-        ) : (
-          <PanelRightClose size={24} />
-        )}
-      </button>
-
-      {/* Overlay for mobile only */}
-      {isMobileOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black/50 z-30"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
       <div
         className={`
