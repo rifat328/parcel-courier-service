@@ -59,7 +59,7 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
           href={element.link}
           onClick={() => setIsMobileOpen(false)}
           className={`
-            flex items-center md:justify-center lg:justify-start gap-4 px-4 lg:pr-4 py-3 rounded-xl text-sm font-roboto md:text-lg font-medium transition-all duration-300
+            flex items-center md:justify-center lg:justify-start gap-4 px-4 md:px-0 lg:px-4 lg:pr-4 py-3 rounded-xl text-sm font-roboto md:text-lg font-medium transition-all duration-300
             ${isActive ? "text-white" : "text-white/50 hover:text-white/70"}
           `}
         >
@@ -110,15 +110,23 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
         `}
       >
         {/* logo */}
-        <div className="flex justify-center p-4 flex-shrink-0  ">
-          <LogoMain size="5xl" className="hidden lg:block" />
-          <div className="lg:hidden w-10 h-10 bg-[#D94E4E] rounded-lg" />
-          {/* Mobile placeholder */}
+        <div className="flex justify-center p-4 flex-shrink-0">
+          <div className="  md:hidden">
+            <LogoMain size="3xl" />
+          </div>
+
+          <div className=" hidden md:block lg:hidden">
+            <LogoMain size="xl" />
+          </div>
+
+          <div className="hidden lg:block">
+            <LogoMain size="5xl" />
+          </div>
         </div>
 
         {/* nav section - scrollable */}
-        <nav className="text-white pt-4 flex-1 overflow-y-auto min-h-0 custom-scrollbar px-4">
-          <ul className="space-y-2 pr-4">{navRender}</ul>
+        <nav className="text-white pt-4 flex-1 overflow-y-auto min-h-0 custom-scrollbar px-4 md:px-1 lg:px-4">
+          <ul className="space-y-2 pr-4 md:pr-0 lg:pr-4">{navRender}</ul>
         </nav>
 
         {/* logout card - fixed at bottom - hide on tablet icon-only view */}
