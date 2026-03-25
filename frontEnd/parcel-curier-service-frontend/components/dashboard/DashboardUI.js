@@ -11,7 +11,7 @@ const DashboardUI = ({ sidebar, children }) => {
   });
 
   return (
-    <div className="flex h-screen w-full bg-[#0D0D0D] p-5 text-white overflow-hidden">
+    <div className="flex h-screen w-full bg-[#0D0D0D] pt-5 px-5 text-white overflow-hidden">
       {/* The Sidebar (Admin, Customer, or Agent) */}
       {sidebarWithProps}
 

@@ -173,4 +173,35 @@ textarea:-webkit-autofill:active {
     background-repeat: repeat;
     background-size: 120px 120px;
   }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+
+  }
+
+  /* Firefox Support */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #1A1A1A transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    /* Hidden by default */
+    transition: all 0.3s ease;
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #1A1A1A;
+    /* Shows up when you hover the sidebar */
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    background: #D94E4E;
+    /* Turns red when you hover the thumb itself */
+  }
 }

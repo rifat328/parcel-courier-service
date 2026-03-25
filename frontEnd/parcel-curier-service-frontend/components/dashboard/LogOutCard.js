@@ -19,11 +19,11 @@ const LogOutCard = (props) => {
   };
 
   return (
-    <div className=" flex items-center justify-between lg:justify-start gap-3 bg-[#1A1A1A] md:bg-transparent lg:bg-[#1A1A1A] p-2 lg:p-3 rounded-2xl transition-all duration-300">
+    <div className=" flex items-center justify-between lg:justify-start gap-3 bg-[#1A1A1A] md:bg-transparent lg:bg-[#1A1A1A] p-2 lg:p-3 rounded-2xl transition-all duration-300  hover:shadow-xl hover:shadow-white/20">
       {/* Profile Image - Clickable */}
       <div
         className="log_out relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-transparent hover:border-[#D94E4E] transition-all cursor-pointer group"
-        onClick={() => router.push("/profile")}
+        onClick={() => router.push("/dashboard/customer/profile")}
         aria-label="Edit Profile"
         title="Profile"
       >
@@ -34,18 +34,19 @@ const LogOutCard = (props) => {
           fill
           className="object-cover "
         />
-        {/* w-full h-full width={50}
-        height={50} */}
+
         <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-10 whitespace-nowrap">
           Profile
         </span>
       </div>
       {/* User Info - Hidden on tablet icon-view (md), visible on mobile and desktop (lg) */}
-      <div className="hidden lg:flex flex-col flex-1 min-w-0">
-        <p className="font-semibold text-sm text-[#D9D9D9] truncate">
+      <div className=" md:hidden lg:flex flex-col flex-1 min-w-0">
+        <p className="font-semibold text-sm lg:text-lg text-[#D9D9D9] truncate">
           {props.userName}
         </p>
-        <p className="text-xs text-gray-500 truncate">{props.userRole}</p>
+        <p className="text-xs lg:text-base text-gray-500 truncate">
+          {props.userRole}
+        </p>
       </div>
 
       {/* Logout Button */}

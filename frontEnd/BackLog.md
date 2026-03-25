@@ -2,7 +2,7 @@
 
 ### **[Customer]**
 
-    -navbar Hydration issues, logOut card responsivenes etc .
+    -navbar Hydration issues, logOut card responsivenes etc .design (custom-scrollbar css class)
     - Active parcel section [responsiveness and polish]
     - key Metrics [ UI/UX polish & responsiveness ]
     - timeline section and history section [not started ]

@@ -97,7 +97,7 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
       <div
         className={`
           main_nav h-full flex flex-col text-white flex-shrink-0 bg-[#0D0D0D] 
-          transition-all duration-300 overflow-hidden z-40
+          transition-all duration-300 overflow-x-hidden z-40
           
           ${/* Position: fixed on mobile only, relative on tablet+ */ ""}
           fixed md:relative 
@@ -106,7 +106,7 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
           ${isMobileOpen ? "translate-x-0 w-50" : "-translate-x-full"} md:translate-x-0
           
           ${/* Width: full on mobile when open, icon-only on tablet, full on laptop+ */ ""}
-            md:w-20 lg:w-64 border-r border-white/10  md:outline-1 md:outline-white/20 lg:outline-none md:rounded-2xl lg:rounded-none
+            md:w-20 lg:w-64  md:outline-1 md:outline-white/20 lg:outline-none md:rounded-2xl lg:rounded-none
         `}
       >
         {/* logo */}
@@ -122,10 +122,7 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
         </nav>
 
         {/* logout card - fixed at bottom - hide on tablet icon-only view */}
-        {/* <div className=" pr-2 md:pr-5 py-4 ">
-          
-        </div> */}
-        <div className="rounded-2xl flex-shrink-0 mt-auto border-t border-white/5 bg-[#0D0D0D] transition duration-75 hover:shadow-xl hover:shadow-white/20">
+        <div className="rounded-2xl flex-shrink-0 pb-4 mb-1 mt-auto border-t border-white/5  transition duration-75 ">
           <LogOutCard userName="Rifat Hossain" userRole="Customer" />
         </div>
       </div>
