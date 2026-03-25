@@ -19,10 +19,10 @@ const LogOutCard = (props) => {
   };
 
   return (
-    <div className=" flex items-center justify-between lg:justify-start gap-3 bg-[#1A1A1A] md:bg-transparent lg:bg-[#1A1A1A] p-2 lg:p-3 rounded-2xl transition-all duration-300  hover:shadow-xl hover:shadow-white/20">
+    <div className=" flex items-center justify-between md:justify-center lg:justify-start gap-3 bg-[#1A1A1A] md:bg-transparent lg:bg-[#1A1A1A] p-2 lg:p-3 rounded-2xl transition-all duration-300  hover:shadow-xl hover:shadow-white/20">
       {/* Profile Image - Clickable */}
       <div
-        className="log_out relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-transparent hover:border-[#D94E4E] transition-all cursor-pointer group"
+        className="log_out relative flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-transparent hover:border-[#D94E4E] transition-all md:hidden lg:block cursor-pointer group"
         onClick={() => router.push("/dashboard/customer/profile")}
         aria-label="Edit Profile"
         title="Profile"
