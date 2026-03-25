@@ -116,7 +116,7 @@ export default function CustomerSidebar({ isMobileOpen, setIsMobileOpen }) {
           </div>
 
           <div className=" hidden md:block lg:hidden">
-            <LogoMain size="xl" />
+            <LogoMain size="2xl" />
           </div>
 
           <div className="hidden lg:block">
