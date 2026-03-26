@@ -2,7 +2,7 @@
 
 ### **[Customer]**
 
-    - Active parcel section [responsiveness and polish]
+    - Active parcel section [responsiveness and polish] , react query functional , backend getparcels controller modification needed to support query parameters coming from client.
     - key Metrics [ UI/UX polish & responsiveness ]
     - timeline section and history section [not started ]
     - Attach background pattern on each section of main content in CustomerDashboard
