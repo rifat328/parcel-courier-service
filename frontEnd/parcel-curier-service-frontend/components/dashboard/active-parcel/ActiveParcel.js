@@ -1,6 +1,9 @@
 import React from "react";
 import ActiveParcelTable from "./ActiveParcelTable";
 import mockParcels from "../mockParcel";
+import { useQuery } from "@tanstack/react-query";
+//QueryKey [ActiveParcel]
+
 const ActiveParcel = () => {
   return (
     <section className=" h-full flex flex-col border m-4 border-red-500">

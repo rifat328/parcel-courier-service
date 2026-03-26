@@ -10,26 +10,31 @@ import {
 import { authorize, checkRole } from "../middlewares/auth.middleware.js";
 const parcelRouter = Router();
 
-parcelRouter.get("/", authorize, checkRole("admin"), getParcels);
+parcelRouter.get(
+  "/",
+  authorize,
+  checkRole(["customer", "agent", "admin"]),
+  getParcels,
+);
 parcelRouter.get("/:id", authorize, getParcel);
 //their own id for their own history except admin
 parcelRouter.get(
   "/history/user/:id",
   authorize,
   checkRole(["customer", "agent", "admin"]),
-  getHistoryParcels
+  getHistoryParcels,
 );
 parcelRouter.post(
   "/create",
   authorize,
   checkRole(["customer", "admin"]),
-  createParcel
+  createParcel,
 );
 parcelRouter.put(
   "/:id",
   authorize,
   checkRole(["customer", "admin", "agent"]),
-  updateParcel
+  updateParcel,
 );
 parcelRouter.delete("/:id", authorize, checkRole(["admin"]), deleteParcel);
 
