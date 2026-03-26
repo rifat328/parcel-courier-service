@@ -5,6 +5,7 @@ import AdminSidebar from "@/components/AdminSidebar";
 import CustomerSidebar from "@/components/CustomerSidebar";
 import AgentSidebar from "@/components/AgentSidebar";
 import DashboardUI from "@/components/dashboard/DashboardUI";
+import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 
 export default async function DashboardLayout({ children }) {
   const cookieStore = await cookies();
@@ -47,12 +48,15 @@ export default async function DashboardLayout({ children }) {
   } else {
     selectedSidebar = <AgentSidebar />;
   }
-
+  //UserProvider is global context
+  // ReactQueryProvider is ReactQuery.
   return (
     //  sideBar and main passed to a shell /UI provider because this layout is
     //   server component
     <UserProvider user={user}>
-      <DashboardUI sidebar={selectedSidebar}>{children}</DashboardUI>
+      <ReactQueryProvider>
+        <DashboardUI sidebar={selectedSidebar}>{children}</DashboardUI>
+      </ReactQueryProvider>
     </UserProvider>
   );
 }
