@@ -2,7 +2,6 @@
 
 ### **[Customer]**
 
-    -
     - Active parcel section [responsiveness and polish]
     - key Metrics [ UI/UX polish & responsiveness ]
     - timeline section and history section [not started ]
