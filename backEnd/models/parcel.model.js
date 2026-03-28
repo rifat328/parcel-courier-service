@@ -53,22 +53,22 @@ const parcelSchema = new mongoose.Schema(
 
     deliveryContactName: {
       type: String,
-      require: true,
+      required: true,
     },
     deliveryContactNumber: {
       type: String,
-      require: true,
+      required: true,
     },
 
     trackingId: { type: String, unique: true }, // (Optional for QR/barcode)
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 parcelSchema.pre("save", async function (next) {
   if (!this.trackingId) {
     this.trackingId = `PARCEL-${Date.now()}-${Math.floor(
-      Math.random() * 1000
+      Math.random() * 1000,
     )}`;
   }
   if (this.paymentType === "prepaid") {

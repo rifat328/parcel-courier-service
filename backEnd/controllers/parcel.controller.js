@@ -4,28 +4,59 @@ import Parcel from "../models/parcel.model.js";
 
 export const getParcels = async (req, res, next) => {
   try {
-    const isAdmin = req.user.role === "admin";
-    if (!isAdmin) {
+    // all parcel , search, active parcel
+    // enum: ["Booked", "Picked Up", "In Transit", "Delivered", "Failed"],
+    const { role, _id } = req.user;
+    const { status, search } = req.query; //get from URL query params;
+
+    let filter = {};
+    if (role === "customer") {
+      filter.customer = _id;
+    } else if (role === "agent") {
+      filter.agent = _id;
+    } else if (role !== "admin") {
       return res.status(403).json({
         success: false,
         message: "Access Denied, you are not authorized to view all parcels",
       });
     }
-    const parcels = await Parcel.find()
-      .populate("customer", "-password")
-      .populate("agent", "-password");
+
+    //status from query paramiter
+    if (status === "active") {
+      filter.status = { $nin: ["Delivered", "Failed"] };
+    } else if (status) {
+      filter.status = status; // like status= Booked
+    }
+
+    // Search Logic ( fuzzy search : Tracking ID, Name, Number)
+    if (search) {
+      const searchRegex = { $regex: search, $options: "i" }; // i would be case insensitive
+      filter.$or = [
+        { trackingId: searchRegex },
+        { deliveryContactName: searchRegex },
+        { deliveryContactNumber: searchRegex },
+      ];
+    }
+
+    // single database call for all:
+    const parcels = await Parcel.find(filter)
+      .populate("customerd", "-password")
+      .populate("agent", "-password")
+      .sort({ createdAt: -1 }); // newest first
 
     // If no parcels found, return 404
-    if (!parcels || parcels.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No parcels found",
-      });
-    }
+    // removed this bec frontend reactquery might see 404 as failed insted of no data
+    // if (!parcels || parcels.length === 0) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "No parcels found",
+    //   });
+    // }
 
     res.status(200).json({
       success: true,
       message: "Parcels fetched successfully",
+      count: parcels.length,
       data: parcels,
     });
   } catch (error) {
