@@ -16,7 +16,7 @@ const ActiveParcelTable = ({ parcels }) => {
       </thead>
       <tbody>
         {parcels.map((parcel) => (
-          <ActiveParcelRow key={parcel.id} parcel={parcel} />
+          <ActiveParcelRow key={parcel.trackingId} parcel={parcel} />
         ))}
       </tbody>
     </table>

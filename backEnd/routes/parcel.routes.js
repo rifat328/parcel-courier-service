@@ -51,7 +51,7 @@ export default parcelRouter;
  * @swagger
  * /api/v1/parcels:
  *   get:
- *     summary: Get all parcels (admin)
+ *     summary: Get all parcels (admin, customer, agent)
  *     tags: [Parcels]
  *     security:
  *       - bearerAuth: []

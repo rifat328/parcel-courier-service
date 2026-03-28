@@ -40,7 +40,7 @@ export const getParcels = async (req, res, next) => {
 
     // single database call for all:
     const parcels = await Parcel.find(filter)
-      .populate("customerd", "-password")
+      .populate("customer", "-password")
       .populate("agent", "-password")
       .sort({ createdAt: -1 }); // newest first
 
