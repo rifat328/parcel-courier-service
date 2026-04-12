@@ -18,7 +18,10 @@ const ActiveParcel = () => {
   });
   if (isLoading) return <div>Loading active parcels... ⏳</div>;
   if (isError) return <div>Error: {error.message} ⚠️</div>;
-
+  console.log(
+    "-------------All the parcel data form react Query--------------------",
+  );
+  console.log(parcels);
   return (
     <section className=" h-full flex flex-col border m-4 border-red-500">
       <div className="px-4 pt-1">

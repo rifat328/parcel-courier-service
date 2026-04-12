@@ -41,14 +41,13 @@ export default async function DashboardLayout({ children }) {
   console.log("User obj data: ", user);
   console.log("COOKIE STORE:", cookieStore.getAll());
 
-  let selectedSidebar;
-  if (user.role === "customer") {
-    selectedSidebar = <CustomerSidebar />;
-  } else if (user.role === "admin") {
-    selectedSidebar = <AdminSidebar />;
-  } else {
-    selectedSidebar = <AgentSidebar />;
-  }
+  const sideBarMap = {
+    customer: CustomerSidebar,
+    admin: AdminSidebar,
+    agent: AgentSidebar,
+  };
+  let selectedSidebar = sideBarMap[user.role] || CustomerSidebar;
+
   //UserProvider is global context
   // ReactQueryProvider is ReactQuery.
 
@@ -65,15 +64,8 @@ export default async function DashboardLayout({ children }) {
     //   server component
     <UserProvider user={user}>
       <ReactQueryProvider>
-        <DashboardUI sidebar={selectedSidebar}>{children}</DashboardUI>
+        <DashboardUI SidebarComponent={selectedSidebar}>{children}</DashboardUI>
       </ReactQueryProvider>
     </UserProvider>
-
-    // Temporarily replace your return with this:
-
-    // <div>
-    //   <h1>Layout Test</h1>
-    //   {children}
-    // </div>
   );
 }
