@@ -38,6 +38,7 @@ export default async function DashboardLayout({ children }) {
   // DEBUGGING BLOCK END
   // if (!response.ok) redirect("/sign-in");
   const user = await response.json();
+  console.log("User obj data: ", user);
   console.log("COOKIE STORE:", cookieStore.getAll());
 
   let selectedSidebar;
@@ -50,6 +51,15 @@ export default async function DashboardLayout({ children }) {
   }
   //UserProvider is global context
   // ReactQueryProvider is ReactQuery.
+
+  console.log("--- DEBUG IMPORTS ---");
+  console.log("AdminSidebar type:", typeof AdminSidebar);
+  console.log("CustomerSidebar type:", typeof CustomerSidebar);
+  console.log("AgentSidebar type:", typeof AgentSidebar);
+  console.log("DashboardUI type:", typeof DashboardUI);
+
+  console.log("UserProvider type:", typeof UserProvider);
+  console.log("ReactQueryProvider type:", typeof ReactQueryProvider);
   return (
     //  sideBar and main passed to a shell /UI provider because this layout is
     //   server component
@@ -58,5 +68,12 @@ export default async function DashboardLayout({ children }) {
         <DashboardUI sidebar={selectedSidebar}>{children}</DashboardUI>
       </ReactQueryProvider>
     </UserProvider>
+
+    // Temporarily replace your return with this:
+
+    // <div>
+    //   <h1>Layout Test</h1>
+    //   {children}
+    // </div>
   );
 }
