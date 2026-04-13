@@ -23,10 +23,13 @@ const ActiveParcel = () => {
   );
   console.log(parcels);
   return (
-    <section className=" h-full flex flex-col border m-4 border-red-500">
+    <section className=" h-full flex flex-col m-4">
       <div className="px-4 pt-1">
-        <h2 className="m-0 md:text-lg text-lg font-roboto font-semibold ">
-          Active Parcel ({parcels?.length || 0})
+        <h2 className="m-0 md:text-lg lg:text-2xl font-roboto font-semibold flex items-center gap-2">
+          Active Parcel
+          <span className="text-lg text-gray-500 font-normal">
+            ({parcels?.length || 0})
+          </span>
         </h2>
       </div>
       <div className="p-4 pt-2 mt-2 bg-card-gray h-full rounded-2xl overflow-x-auto overflow-y-auto ">

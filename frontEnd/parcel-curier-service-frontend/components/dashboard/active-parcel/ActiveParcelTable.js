@@ -14,7 +14,7 @@ const ActiveParcelTable = ({ parcels }) => {
           <th className="text-right">Amount</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="overflow-y-auto no-scrollbar">
         {parcels.map((parcel) => (
           <ActiveParcelRow key={parcel.trackingId} parcel={parcel} />
         ))}
