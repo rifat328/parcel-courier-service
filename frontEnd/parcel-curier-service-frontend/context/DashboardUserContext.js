@@ -1,9 +1,22 @@
 "use client";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const UserContext = createContext();
+
 export const UserProvider = ({ user, children }) => {
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  const [isCreateParcelOpen, setIsCreateParcelOpen] = useState(false);
+
+  const toggleCreateParcelModel = () => {
+    setIsCreateParcelOpen((prev) => !prev);
+  };
+
+  return (
+    <UserContext.Provider
+      value={{ user, isCreateParcelOpen, toggleCreateParcelModel }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const useUser = () => useContext(UserContext);
