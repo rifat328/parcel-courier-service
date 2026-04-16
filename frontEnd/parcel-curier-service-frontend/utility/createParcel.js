@@ -7,7 +7,7 @@ const createParcel = async (formData) => {
     const response = await axios.post(`${baseURL}${route}`, formData, {
       withCredentials: true,
     });
-    return response.data.data;
+    return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || error.message);
   }
