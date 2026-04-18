@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Header from "./Header";
+import { Toaster } from "@/components/ui/sonner";
 // Client Wrapper (often called a "Shell" or "UI Provider").
 const DashboardUI = ({ SidebarComponent, children }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -17,6 +18,7 @@ const DashboardUI = ({ SidebarComponent, children }) => {
         <Header isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
 
         <main className="flex-1 overflow-y-auto no-scrollbar">{children}</main>
+        <Toaster />
       </div>
 
       {/* Mobile Overlay */}

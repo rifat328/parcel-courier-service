@@ -6,13 +6,13 @@ const UserContext = createContext();
 export const UserProvider = ({ user, children }) => {
   const [isCreateParcelOpen, setIsCreateParcelOpen] = useState(false);
 
-  const toggleCreateParcelModel = () => {
+  const toggleCreateParcelModal = () => {
     setIsCreateParcelOpen((prev) => !prev);
   };
 
   return (
     <UserContext.Provider
-      value={{ user, isCreateParcelOpen, toggleCreateParcelModel }}
+      value={{ user, isCreateParcelOpen, toggleCreateParcelModal }}
     >
       {children}
     </UserContext.Provider>
