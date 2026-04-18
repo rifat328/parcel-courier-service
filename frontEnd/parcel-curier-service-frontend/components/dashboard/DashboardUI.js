@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import { Toaster } from "@/components/ui/sonner";
+import { useUser } from "@/context/DashboardUserContext";
+import CreateParcelModal from "./modal/CreateParcelModal";
 // Client Wrapper (often called a "Shell" or "UI Provider").
 const DashboardUI = ({ SidebarComponent, children }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-
+  const { isCreateParcelOpen } = useUser();
   return (
     <div className="flex h-screen w-full bg-[#0D0D0D] pt-5 px-5 text-white overflow-hidden ">
       {/* The Sidebar (Admin, Customer, or Agent) */}
@@ -28,6 +30,8 @@ const DashboardUI = ({ SidebarComponent, children }) => {
           onClick={() => setIsMobileOpen(false)}
         ></div>
       )}
+
+      {isCreateParcelOpen && <CreateParcelModal />}
     </div>
   );
 };

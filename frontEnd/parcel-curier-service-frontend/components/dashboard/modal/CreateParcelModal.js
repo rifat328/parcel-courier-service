@@ -19,7 +19,7 @@ const CreateParcelModal = () => {
         error.response?.data?.message ||
         error.message ||
         "Server connection failed";
-      toast.error(errorMessage);
+      toast.error(errorMessage, { position: "top-center" });
     }, //Fires if the mutation fails.
 
     /* onMutate: () => {}, Fires before the mutation starts; ideal for optimistic updates.
@@ -39,9 +39,7 @@ const CreateParcelModal = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md">
       {/* click outside to close */}
-      <div className="absolute inset-0" on onClick={toggleCreateParcelModal}>
-        {" "}
-      </div>
+      <div className="absolute inset-0" on onClick={toggleCreateParcelModal} />
 
       <div className="relative bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl w-full max-w-md shadow-2xl">
         <h2 className="text-2xl font-bold mb-6 text-white">
