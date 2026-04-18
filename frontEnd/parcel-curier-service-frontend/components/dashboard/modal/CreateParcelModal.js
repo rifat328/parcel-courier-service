@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useUser } from "@/context/DashboardUserContext";
 const CreateParcelModal = () => {
   const queryClient = useQueryClient();
-  const { toggleCreateParcelModal } = useUser(); //take back from global context
+  const { toggleCreateParcelModal, user } = useUser(); //take back from global context
 
   const mutation = useMutation({
     mutationFn: createParcel,
@@ -47,13 +47,72 @@ const CreateParcelModal = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Example Input */}
+          {/* deliveryContactName */}
           <div>
             <label className="block text-xs text-gray-400 mb-1 ml-1">
-              Parcel Name
+              Customer Name
             </label>
             <input
-              name="name"
+              name="deliveryContactName"
+              required
+              className="w-full bg-black border border-white/5 rounded-xl p-3 text-white focus:ring-2 focus:ring-[#D94E4E] outline-none"
+            />
+          </div>
+          {/* deliveryContactNumber */}
+          <div>
+            <label className="block text-xs text-gray-400 mb-1 ml-1">
+              Phone
+            </label>
+            <input
+              name="deliveryContactNumber"
+              required
+              className="w-full bg-black border border-white/5 rounded-xl p-3 text-white focus:ring-2 focus:ring-[#D94E4E] outline-none"
+            />
+          </div>
+          {/* parcelType */}
+          <div>
+            <label className="block text-xs text-gray-400 mb-1 ml-1">
+              Type
+            </label>
+            <input
+              name="parcelType"
+              required
+              className="w-full bg-black border border-white/5 rounded-xl p-3 text-white focus:ring-2 focus:ring-[#D94E4E] outline-none"
+            />
+          </div>
+
+          {/* paymentType : if prpaid had to be validated for available balance */}
+          <div>
+            <label className="block text-xs text-gray-400 mb-1 ml-1">
+              Payment
+            </label>
+            <input
+              name="paymentType"
+              required
+              className="w-full bg-black border border-white/5 rounded-xl p-3 text-white focus:ring-2 focus:ring-[#D94E4E] outline-none"
+            />
+          </div>
+
+          {/* COD ammount  if payment type is COD this show this input field*/}
+
+          {/* pickupAddress */}
+          <div>
+            <label className="block text-xs text-gray-400 mb-1 ml-1">
+              Pickup Address
+            </label>
+            <input
+              name="pickupAddress"
+              className="w-full bg-black border border-white/5 rounded-xl p-3 text-white focus:ring-2 focus:ring-[#D94E4E] outline-none"
+            />
+          </div>
+
+          {/* deliveryAddress */}
+          <div>
+            <label className="block text-xs text-gray-400 mb-1 ml-1">
+              Delivery Address
+            </label>
+            <input
+              name="deliveryAddress"
               required
               className="w-full bg-black border border-white/5 rounded-xl p-3 text-white focus:ring-2 focus:ring-[#D94E4E] outline-none"
             />
