@@ -71,7 +71,7 @@ parcelSchema.pre("save", async function (next) {
       Math.random() * 1000,
     )}`;
   }
-  if (this.paymentType === "prepaid") {
+  if (this.paymentType === "Prepaid") {
     this.codAmount = 0; // Ensure COD amount is 0 for prepaid parcels.
   }
   if (!this.pickupAddress && this.customer) {
