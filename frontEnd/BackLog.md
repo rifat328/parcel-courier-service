@@ -25,7 +25,7 @@
 | Category   | Task                                                                                    | Priority | Status   |
 | ---------- | --------------------------------------------------------------------------------------- | -------- | -------- |
 | Database   | "Create GlobalSetting schema for dynamic pricing (fees, weights)."                      | High     | 🟦 To Do |
-| Database   | Wallet Integration Add walletBalance to the User model, add deliveryFee to parcel model | High     | 🟦 To Do |
+| Database   | Wallet Integration Add walletBalance to the User model, add deliveryFee to parcel model | High     | ☑️ Done  |
 | Validation | Define a parcelSchema using Zod (to be shared/mirrored).                                | High     | 🟦 To Do |
 | TypeScript | Define interface Parcel and interface User for type safety                              | High     | 🟦 To Do |
 | Frontend   | Integrate react-hook-form + @hookform/resolvers/zod in Modal.                           | Medium   | 🟦 To Do |

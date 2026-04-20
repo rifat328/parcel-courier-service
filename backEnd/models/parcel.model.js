@@ -61,6 +61,11 @@ const parcelSchema = new mongoose.Schema(
     },
 
     trackingId: { type: String, unique: true }, // (Optional for QR/barcode)
+
+    deliveryFee: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -71,12 +76,23 @@ parcelSchema.pre("save", async function (next) {
       Math.random() * 1000,
     )}`;
   }
+
+  // get user model , with that ref fetch customer data
+  const User = mongoose.model("User");
+  const customerDoc = await User.findById(this.customer);
+
+  if (!customerDoc) {
+    return next(new Error("Customer not found"));
+  }
+
   if (this.paymentType === "Prepaid") {
+    if (customerDoc.walletBalance < this.deliveryFee) {
+      return next(new Error("Insufficient Balance in wallet."));
+    }
     this.codAmount = 0; // Ensure COD amount is 0 for prepaid parcels.
   }
-  if (!this.pickupAddress && this.customer) {
-    const customer = await mongoose.model("User").findById(this.customer);
-    this.pickupAddress = customer.address; // Set pickup address to customer's address if not provided
+  if (!this.pickupAddress) {
+    this.pickupAddress = customerDoc.address; // Set pickup address to customer's address if not provided
   }
   next();
 });

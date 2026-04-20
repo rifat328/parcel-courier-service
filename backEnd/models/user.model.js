@@ -46,8 +46,13 @@ const userSchema = new mongoose.Schema(
         message: "Address must be at least 10 characters long",
       },
     },
+    walletBalance: {
+      type: Number,
+      default: 0,
+      min: [0, "Insufficient Balance"],
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.model("User", userSchema);
