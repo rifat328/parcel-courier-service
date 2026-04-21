@@ -21,17 +21,19 @@
 ## Remodeling schema for payment and fees calculation
 
     - Total Fee = Base Zone rate + (Weight X Per Kg Charge ) + Type Surcharge (eg. Fragile )
+    - also extra charge if you want that amount to taken when delivered
 
-| Category   | Task                                                                                    | Priority | Status   |
-| ---------- | --------------------------------------------------------------------------------------- | -------- | -------- |
-| Database   | "Create GlobalSetting schema for dynamic pricing (fees, weights)."                      | High     | 🟦 To Do |
-| Database   | Wallet Integration Add walletBalance to the User model, add deliveryFee to parcel model | High     | ☑️ Done  |
-| Validation | Define a parcelSchema using Zod (to be shared/mirrored).                                | High     | 🟦 To Do |
-| TypeScript | Define interface Parcel and interface User for type safety                              | High     | 🟦 To Do |
-| Frontend   | Integrate react-hook-form + @hookform/resolvers/zod in Modal.                           | Medium   | 🟦 To Do |
-| Logic      | Add calculateFee utility on backend fetching from GlobalSetting                         | Medium   | 🟦 To Do |
-| UI/UX      | Build Admin Settings dashboard to update fee values dynamically.                        | Low      | 🟦 To Do |
-| Refactor   | Convert CreateParcelModal from .jsx to .tsx                                             | Low      | 🟦 To Do |
+| Category    | Task                                                                                      | Priority | Status   |
+| ----------- | ----------------------------------------------------------------------------------------- | -------- | -------- |
+| Database    | "Create GlobalSetting schema for dynamic pricing (fees, weights)."                        | High     | 🟦 To Do |
+| Transaction | utility functions to calculate fees && update createParcel functiuon in parcel controller | High     | 🟦 To Do |
+| Database    | Wallet Integration Add walletBalance to the User model, add deliveryFee to parcel model   | High     | ☑️ Done  |
+| Validation  | Define a parcelSchema using Zod (to be shared/mirrored).                                  | High     | 🟦 To Do |
+| TypeScript  | Define interface Parcel and interface User for type safety                                | High     | 🟦 To Do |
+| Frontend    | Integrate react-hook-form + @hookform/resolvers/zod in Modal.                             | Medium   | 🟦 To Do |
+| Logic       | Add calculateFee utility on backend fetching from GlobalSetting                           | Medium   | 🟦 To Do |
+| UI/UX       | Build Admin Settings dashboard to update fee values dynamically.                          | Low      | 🟦 To Do |
+| Refactor    | Convert CreateParcelModal from .jsx to .tsx                                               | Low      | 🟦 To Do |
 
 ### Frontend (React / Modal)
 
