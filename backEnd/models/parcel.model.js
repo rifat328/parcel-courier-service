@@ -14,8 +14,13 @@ const parcelSchema = new mongoose.Schema(
 
     parcelType: {
       type: String,
-      enum: ["small", "medium", "large", "fragile", "other"],
+      enum: ["small", "medium", "large"],
       default: "medium",
+    },
+    parcelSurcharge: {
+      type: String,
+      enum: ["fragile", "normal", "highValue"],
+      default: "normal",
     },
 
     paymentType: {
