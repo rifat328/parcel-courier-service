@@ -108,22 +108,41 @@ export const createParcel = async (req, res, next) => {
     // parcel.customer._id.toString();
     const customerId = req.user._id.toString();
     const userRole = req.user.role;
-    console.log(`Customer ID: ${customerId}`);
-    const customer = await User.findById(customerId);
+    // console.log(`Customer ID: ${customerId}`);
+    const customer = await User.findById(customerId).session(session);
     if (!customer) {
       return res.status(404).json({
         success: false,
         message: "Customer not found",
       });
     }
+
+    // payment check
+    if (req.body.paymentType === "Prepaid") {
+      if (customer.walletBalance < req.body.deliveryFee) {
+        return res.status(400).json({
+          success: false,
+          message: "Insufficient wallet balance",
+        });
+      }
+    }
+    // deduct balance( Automatic within the transaction)
+    customer.walletBalance -= req.body.deliveryFee;
+    await customer.save({ session });
+
+    // prepare parcel data
     const parcelData = {
       ...req.body,
       customer: customerId,
+      // Priority: Provided Address > Customer Default Address
       pickupAddress: req.body.pickupAddress || customer.address,
+      // Ensure COD is 0 if prepaid
+      codAmount: req.body.paymentType ? 0 : req.body.codAmount,
     };
-    const parcel = await Parcel.create(parcelData);
-    await parcel.save({ session });
+
+    const [parcel] = await Parcel.create([parcelData], { session });
     await session.commitTransaction();
+
     res.status(201).json({
       success: true,
       message: "Parcel created successfully",
