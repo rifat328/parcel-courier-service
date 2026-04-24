@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import Parcel from "../models/parcel.model.js";
-
+import BusinessSettings from "../models/businessSettings.model.js";
 export const getParcels = async (req, res, next) => {
   try {
     // all parcel , search, active parcel
@@ -102,6 +102,12 @@ export const getParcel = async (req, res, next) => {
 };
 
 export const createParcel = async (req, res, next) => {
+  //business on / off check
+  const settings = await BusinessSettings.findOne().lean();
+  if (!settings.financial.isServiceActive) {
+    throw new Error("We are currently not accepting new bookings.");
+  }
+
   const session = await mongoose.startSession();
   session.startTransaction();
   try {

@@ -4,7 +4,7 @@ const businessSettingsSchema = new mongoose.Schema(
   {
     pricing: {
       insideDhakaFee: { type: Number, default: 60 },
-      subOfficeFee: { type: Number, default: 100 },
+      suburbFee: { type: Number, default: 100 },
       outsideDhakaFee: { type: Number, default: 150 },
     },
     weightRules: {
@@ -17,11 +17,12 @@ const businessSettingsSchema = new mongoose.Schema(
       fragileSurcharge: { type: Number, default: 50 },
       liquidSurcharge: { type: Number, default: 20 },
       codCommissionPercentage: { type: Number, default: 1 }, // 1% of COD amount
+      fastDeliveryCharge: { type: Number, default: 0 },
     },
     financial: {
       vatPercentage: { type: Number, default: 0 }, // Often 0 for small couriers
       minWalletBalance: { type: Number, default: 0 },
-      isServiceActive: { type: boolean, default: true },
+      isServiceActive: { type: Boolean, default: true },
     },
     // Useful for auditing who changed the prices
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
