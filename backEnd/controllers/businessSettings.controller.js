@@ -33,7 +33,7 @@ export const updateBusinessSettings = async (req, res, next) => {
       lastUpdatedBy: req.user._id, // Track who made the change
     };
 
-    // We use findOneAndUpdate with an empty filter {} to target the singleton
+    // use findOneAndUpdate with an empty filter {} to target the singleton
     const settings = await BusinessSettings.findOneAndUpdate({}, updateData, {
       new: true, // Return the updated document
       upsert: true, // Create it if it doesn't exist
