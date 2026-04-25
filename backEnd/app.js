@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import connectToDatabase from "./DATABASE/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import businessSettingsRouter from "./routes/businessSettings.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import parcelRouter from "./routes/parcel.routes.js";
 import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
@@ -31,7 +32,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 // arcjet middleware for bot detection and rate limiting
@@ -40,6 +41,7 @@ app.use(arcjetMiddleware);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/parcels", parcelRouter);
+app.use("/api/v1/businesssettings", businessSettingsRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Parcel Currier Service");
