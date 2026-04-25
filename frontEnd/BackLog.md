@@ -25,7 +25,7 @@
 
 | Category         | Task                                                                                      | Priority | Status   |
 | ---------------- | ----------------------------------------------------------------------------------------- | -------- | -------- |
-| Database         | "Create GlobalSetting schema for dynamic pricing (fees, weights)."                        | High     | 🟦 To Do |
+| Database         | "Create GlobalSetting schema for dynamic pricing (fees, weights)."                        | High     | ☑️ Done  |
 | Transaction      | utility functions to calculate fees && update createParcel functiuon in parcel controller | High     | 🟦 To Do |
 | Database         | Wallet Integration Add walletBalance to the User model, add deliveryFee to parcel model   | High     | ☑️ Done  |
 | Validation       | Define a parcelSchema using Zod (to be shared/mirrored).                                  | High     | 🟦 To Do |
@@ -37,6 +37,8 @@
 | Upsert Logic     | Implement findOneAndUpdate with upsert: true for settings.                                | Low      | 🟦 To Do |
 | Admin Middleware | Ensure these routes are protected by an isAdmin middleware..                              | Low      | 🟦 To Do |
 | Audit Collection | (Optional) Create a BusinessSettingsHistory model to track old prices.                    | Low      | 🟦 To Do |
+
+(:+1:)calculate price => utility functions to calculate fees && update createParcel functiuon in parcel controller
 
 ### Frontend (React / Modal)
 

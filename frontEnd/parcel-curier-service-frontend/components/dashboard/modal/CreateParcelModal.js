@@ -1,5 +1,5 @@
 import React from "react";
-import createParcel from "@/utility/createParcel";
+import createParcel from "@/utils/createParcel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useUser } from "@/context/DashboardUserContext";

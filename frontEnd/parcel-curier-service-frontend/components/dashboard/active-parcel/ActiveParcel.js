@@ -2,7 +2,7 @@
 import React from "react";
 import ActiveParcelTable from "./ActiveParcelTable";
 import { useQuery } from "@tanstack/react-query";
-import fetchParcelsByStatus from "utility/fetchParcelByStatus";
+import fetchParcelsByStatus from "@/utils/fetchParcelByStatus";
 
 //QueryKey ['parcels', 'active']
 
