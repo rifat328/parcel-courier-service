@@ -1,5 +1,11 @@
 // types/businessSettings.ts
 export interface IBusinessSettings {
+  businessIdentity:{
+    businessName:string;
+    businessEmail:string;
+    businessPhone:string;
+    businessAddress:string;
+  }
   pricing: {
     insideDhakaFee: number;
     suburbFee: number;
@@ -15,7 +21,7 @@ export interface IBusinessSettings {
     fragileSurcharge: number;
     liquidSurcharge: number;
     codCommissionPercentage: number;
-    fastDeliveryCharge:Number;
+    fastDeliveryCharge:number;
   };
   financial: {
     vatPercentage: number;
