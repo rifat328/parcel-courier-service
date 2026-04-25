@@ -33,9 +33,8 @@ const businessSettingsSchema = new mongoose.Schema(
         },
       },
       businessAddress: {
-        // fixed: camelCase
         type: String,
-        trim: true, // fixed: always trim
+        trim: true,
         maxLength: [200, "Address cannot exceed 200 characters"],
         validate: {
           validator: function (v) {

@@ -9,14 +9,13 @@ import {
 } from "../controllers/parcel.controller.js";
 import { authorize, checkRole } from "../middlewares/auth.middleware.js";
 const parcelRouter = Router();
-
+// ✅ Static routes first
 parcelRouter.get(
   "/",
   authorize,
   checkRole(["customer", "agent", "admin"]),
   getParcels,
 );
-parcelRouter.get("/:id", authorize, getParcel);
 //their own id for their own history except admin
 parcelRouter.get(
   "/history/user/:id",
@@ -30,6 +29,10 @@ parcelRouter.post(
   checkRole(["customer", "admin"]),
   createParcel,
 );
+
+// ✅ Dynamic routes last
+parcelRouter.get("/:id", authorize, getParcel);
+
 parcelRouter.put(
   "/:id",
   authorize,

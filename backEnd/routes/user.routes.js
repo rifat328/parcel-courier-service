@@ -13,13 +13,15 @@ userRouter.get("/me", authorize, (req, res) => {
   const { password, __v, ...safeUser } = req.user._doc;
   res.json(safeUser);
 });
-userRouter.get("/:id", authorize, getUser);
 userRouter.post("/", authorize, (reg, res) =>
   res.send({
     title:
       "CREATE A User ,Caution :: User creation logic handeled by auth sign up , to handle duplication this fild is empty",
-  })
+  }),
 );
+
+// ✅ Dynamic routes last
+userRouter.get("/:id", authorize, getUser);
 userRouter.put("/:id", authorize, checkRole(["customer", "admin"]), updateUser);
 userRouter.delete("/:id", authorize, checkRole("admin"), deleteUser);
 // userRouter.get("/me", authorize, (req, res) => {
