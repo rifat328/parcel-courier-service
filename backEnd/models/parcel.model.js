@@ -19,7 +19,7 @@ const parcelSchema = new mongoose.Schema(
     },
     parcelSurcharge: {
       type: String,
-      enum: ["fragile", "normal", "highValue"],
+      enum: ["fragile", "normal"],
       default: "normal",
     },
 
