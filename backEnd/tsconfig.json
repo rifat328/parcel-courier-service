@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "sourceMap": true
   },
-  "include": ["./**/*"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules", "dist"]
   
 }
