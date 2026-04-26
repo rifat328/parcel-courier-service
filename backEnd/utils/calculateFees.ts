@@ -1,1 +1,5 @@
-const calculateFees = (object) => {};
+const calculateFees = (parcelData,businessSettings) => {
+    interface IBusinessFee{
+        
+    }
+};
