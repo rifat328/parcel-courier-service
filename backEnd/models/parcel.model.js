@@ -64,12 +64,44 @@ const parcelSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    weightKg: {
+      type: Number,
+      required: true,
+      min: [0.1, "Weight must be at least 0.1 kg"],
+    },
+    zone: {
+      type: String,
+      enum: ["insideDhaka", "suburb", "outsideDhaka"],
+      required: true,
+    },
+    codCollectionAmount: {
+      // What agent collects from end buyer at door
+      // Merchant sets this: can be product price + delivery fee or just product price
+      type: Number,
+      default: 0,
+    },
+    codRemittanceAmount: {
+      // What merchant(Customer role) receives back after courier takes commission
+      // Computed: codCollectionAmount - codCommission
+      type: Number,
+      default: 0,
+    },
 
     trackingId: { type: String, unique: true }, // (Optional for QR/barcode)
 
     deliveryFee: {
       type: Number,
       required: true,
+    },
+    feeBreakdown: {
+      // Store itemised breakdown for receipts/disputes
+      baseDeliveryFee: { type: Number, default: 0 },
+      extraWeightFee: { type: Number, default: 0 },
+      surcharge: { type: Number, default: 0 },
+      codCommission: { type: Number, default: 0 },
+      fastDeliveryCharge: { type: Number, default: 0 },
+      subtotal: { type: Number, default: 0 },
+      vat: { type: Number, default: 0 },
     },
   },
   { timestamps: true },
