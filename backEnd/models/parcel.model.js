@@ -82,11 +82,14 @@ const parcelSchema = new mongoose.Schema(
     },
     codRemittanceAmount: {
       // What merchant(Customer role) receives back after courier takes commission
-      // Computed: codCollectionAmount - codCommission
+      // Computed: codCollectionAmount - codCommission - totalFee
       type: Number,
       default: 0,
     },
-
+    isFastDelivery: {
+      type: Boolean,
+      default: false,
+    },
     trackingId: { type: String, unique: true }, // (Optional for QR/barcode)
 
     deliveryFee: {
@@ -97,11 +100,12 @@ const parcelSchema = new mongoose.Schema(
       // Store itemised breakdown for receipts/disputes
       baseDeliveryFee: { type: Number, default: 0 },
       extraWeightFee: { type: Number, default: 0 },
-      surcharge: { type: Number, default: 0 },
+      parcelSurcharge: { type: Number, default: 0 },
       codCommission: { type: Number, default: 0 },
       fastDeliveryCharge: { type: Number, default: 0 },
       subtotal: { type: Number, default: 0 },
       vat: { type: Number, default: 0 },
+      codRemittanceAmount: { type: Number, default: 0 },
     },
   },
   { timestamps: true },

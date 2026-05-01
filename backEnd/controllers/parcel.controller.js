@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import Parcel from "../models/parcel.model.js";
 import BusinessSettings from "../models/businessSettings.model.js";
+import { calculateFees } from "../utils/calculateFees.js";
+import ErrorHandler from "../utils/ErrorHandler.ts";
 export const getParcels = async (req, res, next) => {
   try {
     // all parcel , search, active parcel
@@ -102,48 +104,89 @@ export const getParcel = async (req, res, next) => {
 };
 
 export const createParcel = async (req, res, next) => {
-  //business on / off check
-  const settings = await BusinessSettings.findOne().lean();
-  if (!settings.financial.isServiceActive) {
-    throw new Error("We are currently not accepting new bookings.");
-  }
-
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
     // parcel.customer._id.toString();
-    const customerId = req.user._id.toString();
+    const customerId = req.user._id;
     const userRole = req.user.role;
-    // console.log(`Customer ID: ${customerId}`);
-    const customer = await User.findById(customerId).session(session);
-    if (!customer) {
-      return res.status(404).json({
-        success: false,
-        message: "Customer not found",
-      });
-    }
+    // 1. Fetch Global Settings & Customer in parallel for speed
+    const [settings, customer] = await Promise.all([
+      BusinessSettings.findOne({ singleton: true }).session(session).lean(),
+      User.findById(customerId).session(session),
+    ]);
 
-    // payment check
-    if (req.body.paymentType === "Prepaid") {
-      if (customer.walletBalance < req.body.deliveryFee) {
+    if (!settings)
+      throw new ErrorHandler("Business settings not configured.", 404);
+    if (!settings.financial.isServiceActive)
+      throw new ErrorHandler(
+        "We are currently not accepting new bookings.",
+        503,
+      );
+    if (!customer) throw new ErrorHandler("Customer not found.", 404);
+
+    // 2. Prepare Input for the Calculator
+    const {
+      zone,
+      weightKG,
+      parcelType,
+      parcelSurcharge,
+      paymentType,
+      codAmount,
+      isFastDelivery,
+    } = req.body;
+    // 3 calculate fees securely on the server side
+    const feeBreakdown = calculateFees(
+      {
+        zone,
+        weightKG,
+        parcelSize: parcelType,
+        parcelSurcharge,
+        paymentType,
+        codCollectionAmount: codAmount,
+        isFastDelivery,
+      },
+      settings,
+    );
+
+    //4.  payment check Wallet Balance & Validation Logic
+    if (paymentType === "Prepaid") {
+      // Check if user has enough balance (Total Fee + //// Min required balance)
+      const requiredBalance = feeBreakdown.totalFee; // + settings.financial.minWalletBalance;
+
+      if (customer.walletBalance < requiredBalance) {
         return res.status(400).json({
           success: false,
-          message: "Insufficient wallet balance",
+          message: `Insufficient balance. You need at least ${requiredBalance} in your wallet.`,
         });
       }
-    }
-    // deduct balance( Automatic within the transaction)
-    customer.walletBalance -= req.body.deliveryFee;
-    await customer.save({ session });
 
-    // prepare parcel data
+      // deduct balance( Automatic within the transaction)
+      customer.walletBalance -= feeBreakdown.totalFee;
+      await customer.save({ session });
+    } else if (paymentType === "COD") {
+      const requiredBalance = feeBreakdown.totalFee;
+      if (customer.walletBalance < requiredBalance) {
+        return res.status(400).json({
+          success: false,
+          message: `Insufficient balance. You need at least ${requiredBalance} in your wallet to place a COD order.`,
+        });
+      }
+
+      customer.walletBalance -= feeBreakdown.totalFee;
+      await customer.save({ session });
+    }
+
+    //5. prepare parcel data
     const parcelData = {
       ...req.body,
       customer: customerId,
       // Priority: Provided Address > Customer Default Address
       pickupAddress: req.body.pickupAddress || customer.address,
       // Ensure COD is 0 if prepaid
-      codAmount: req.body.paymentType ? 0 : req.body.codAmount,
+      codAmount: paymentType === "Prepaid" ? 0 : codAmount,
+      deliveryFee: feeBreakdown.totalFee,
+      feeBreakdown: feeBreakdown,
     };
 
     const [parcel] = await Parcel.create([parcelData], { session });
@@ -152,7 +195,10 @@ export const createParcel = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "Parcel created successfully",
-      data: parcel,
+      data: {
+        parcel,
+        feeBreakdown,
+      },
     });
   } catch (error) {
     await session.abortTransaction();
@@ -266,10 +312,22 @@ export const updateParcel = async (req, res, next) => {
           message: "You are not assigned to this parcel",
         });
       }
-
+      // update status of parcel & auto update their walletBalance
       if ("status" in req.body) {
         parcel.status = req.body.status;
+
+        //settle COD upon delivery
+        if (req.body.status === "Deliverd" && parcel.paymentType === "COD") {
+          const merchant = await User.findById(parcel.customer._id).session(
+            session,
+          );
+          if (parcel.feeBreakdown.codRemittanceAmount > 0) {
+            merchant.walletBalance += parcel.feeBreakdown.codRemittanceAmount;
+            await merchant.save({ session });
+          }
+        }
       }
+
       if (req.body.location) {
         parcel.location = req.body.location;
       }

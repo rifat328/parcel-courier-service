@@ -1,38 +1,36 @@
-const errorMiddleware = (err, req, res, next) => {
-  try {
-    let error = { ...err };
-    error.message = err.message;
-    console.error(err);
+export default function errorMiddleware(err, req, res, next) {
+  let error = { ...err };
+  error.message = err.message;
 
-    // Mongose Bad Object
-    if (err.name === "CastError") {
-      const message = "Resource not found";
-      error = new Error(message);
-      error.statusCode = 404;
-    }
+  // Log for development
+  console.error(`Error Logic: ${err.name}`, err);
 
-    //Mongoose Duplicate Key
-    if (err.code === 11000) {
-      const message = "Duplicate field Value entered";
-      error = new Error(message);
-      error.statusCode = 400;
-    }
-
-    // Mongoose Validation Error
-    if (err.Name === "ValidationError") {
-      const message = Object.values(err.errors).map((val) => val.message);
-      error = new Error(message.join(","));
-      error.statusCode = 400;
-    }
-
-    res
-      .status(error.statusCode || 500)
-      .json({ success: false, error: error.message || "Server Error" });
-  } catch (error) {
-    next(error);
+  // 1. Mongoose Bad ObjectId (CastError)
+  if (err.name === "CastError") {
+    error.message = "Resource not found";
+    error.statusCode = 404;
   }
-};
 
-export default errorMiddleware;
-// This middleware handles errors that occur in the application.
-// It checks for specific error types such as CastError, Duplicate Key, and Validation Error,
+  // 2. Mongoose Duplicate Key
+  if (err.code === 11000) {
+    error.message = "Duplicate field value entered";
+    error.statusCode = 400;
+  }
+
+  // 3. Mongoose Validation Error (Fixed 'Name' typo)
+  if (err.name === "ValidationError") {
+    error.message = Object.values(err.errors)
+      .map((val) => val.message)
+      .join(", ");
+    error.statusCode = 400;
+  }
+
+  // 4. Handle standard Thrown Errors (like "Customer not found")
+  // If no status code is set yet, check if the error object has one, or default to 500
+  const finalStatusCode = error.statusCode || err.statusCode || 500;
+
+  res.status(finalStatusCode).json({
+    success: false,
+    error: error.message || "Server Error",
+  });
+}

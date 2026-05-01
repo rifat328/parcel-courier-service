@@ -74,7 +74,7 @@ export interface IFeeBreakdown {
  * // breakdown.codRemittanceAmount → remit this back to merchant after agent collects
  */
 
-const calculateFees = (input: ICalculateFeesInput,settings: IBusinessRule):IFeeBreakdown => {
+export const  calculateFees = (input: ICalculateFeesInput,settings: IBusinessRule):IFeeBreakdown => {
    
 
   const {
@@ -125,7 +125,6 @@ const calculateFees = (input: ICalculateFeesInput,settings: IBusinessRule):IFeeB
 
   const surchargeMap: Record<ParcelSurcharge, number> = {
     fragile: surcharges.fragileSurcharge,
-    liquid:  surcharges.liquidSurcharge,
     normal:  0,
   };
   const parcelSurchargeAmount = surchargeMap[parcelSurcharge];
@@ -159,10 +158,9 @@ const calculateFees = (input: ICalculateFeesInput,settings: IBusinessRule):IFeeB
   // What you owe back to the merchant after agent collects from end buyer.
   // If Prepaid, merchant gets nothing back through COD flow.
 
-  const codRemittanceAmount =
-    paymentType === "COD"
-      ? roundToCents(codCollectionAmount - codCommission)
-      : 0;
+  // Clamp to 0 — wallet covers the shortfall, remittance is never negative
+  const codRemittanceAmount = Math.max(0, roundToCents(codCollectionAmount - codCommission - totalFee))
+   
 
   return {
     baseDeliveryFee,
