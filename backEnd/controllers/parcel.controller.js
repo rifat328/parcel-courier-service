@@ -186,6 +186,7 @@ export const createParcel = async (req, res, next) => {
       // Ensure COD is 0 if prepaid
       codAmount: paymentType === "Prepaid" ? 0 : codAmount,
       deliveryFee: feeBreakdown.totalFee,
+      codRemittanceAmount: feeBreakdown.codRemittanceAmount,
       feeBreakdown: feeBreakdown,
     };
 
