@@ -26,16 +26,16 @@
 | Category         | Task                                                                                      | Priority | Status   |
 | ---------------- | ----------------------------------------------------------------------------------------- | -------- | -------- |
 | Database         | "Create GlobalSetting schema for dynamic pricing (fees, weights)."                        | High     | ☑️ Done  |
-| Transaction      | utility functions to calculate fees && update createParcel functiuon in parcel controller | High     | 🟦 To Do |
+| Transaction      | utility functions to calculate fees && update createParcel functiuon in parcel controller | High     | ☑️ Done  |
 | Database         | Wallet Integration Add walletBalance to the User model, add deliveryFee to parcel model   | High     | ☑️ Done  |
 | Validation       | Define a parcelSchema using Zod (to be shared/mirrored).                                  | High     | 🟦 To Do |
 | TypeScript       | Define interface Parcel and interface User for type safety                                | High     | 🟦 To Do |
 | Frontend         | Integrate react-hook-form + @hookform/resolvers/zod in Modal.                             | Medium   | 🟦 To Do |
-| Logic            | Add calculateFee utility on backend fetching from GlobalSetting                           | Medium   | 🟦 To Do |
+| Logic            | Add calculateFee utility on backend fetching from GlobalSetting                           | Medium   | ☑️ Done  |
 | UI/UX            | Build Admin Settings dashboard to update fee values dynamically.                          | Low      | 🟦 To Do |
 | Refactor         | Convert CreateParcelModal from .jsx to .tsx                                               | Low      | 🟦 To Do |
-| Upsert Logic     | Implement findOneAndUpdate with upsert: true for settings.                                | Low      | 🟦 To Do |
-| Admin Middleware | Ensure these routes are protected by an isAdmin middleware..                              | Low      | 🟦 To Do |
+| Upsert Logic     | Implement findOneAndUpdate with upsert: true for settings.                                | Low      | ☑️ Done  |
+| Admin Middleware | Ensure these routes are protected by an isAdmin middleware..                              | Low      | ☑️ Done  |
 | Audit Collection | (Optional) Create a BusinessSettingsHistory model to track old prices.                    | Low      | 🟦 To Do |
 
 (:+1:)calculate price => utility functions to calculate fees && update createParcel functiuon in parcel controller
