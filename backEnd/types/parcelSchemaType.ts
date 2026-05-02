@@ -39,7 +39,7 @@ export interface IParcel {
   codAmount: number;
   status: ParcelStatus;
   agent: Types.ObjectId | null;
-  location: ILocation;
+  location?: ILocation;
   deliveryContactName: string;
   deliveryContactNumber: string;
   weightKg: number;
